@@ -1,0 +1,24 @@
+[
+    {
+        "id":101,
+        "name":"Laptop",
+        "image":"assets/images/Laptop.jpg",
+        "price":50000,
+        "qty":0
+    },
+    {
+        "id":102,
+        "name":"Airpods",
+        "image":"assets/images/airpods.jpg",
+        "price":50000,
+        "qty":0
+    },
+    {
+        "id":103,
+        "name":"SmartPhone",
+        "image":"assets/images/smartphone.jpg",
+        "price":12000,
+        "qty":0
+    }
+
+]

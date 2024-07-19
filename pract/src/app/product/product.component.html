@@ -1,0 +1,18 @@
+<div class="row">
+  <div class="col-sm-4 card" *ngFor="let p of arr">
+    <div class="card-title">
+      <h3>{{ p.name }}</h3>
+    </div>
+    <div class="card-body">
+      <img src="{{ p.image }}" width="250" height="200" alt="" />
+
+      <div class="card-text">
+        <a class="btn btn-secondary">Price:Rs.{{ p.price }}</a>
+        <button class="btn btn-primary" (click)="onShare()">Share</button>
+        <button class="btn btn-warning" (click)="addToCart(p)">
+          <i class="fa fa-shopping-cart"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

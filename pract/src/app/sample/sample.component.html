@@ -1,0 +1,65 @@
+<p>
+  <span>1. [ngStyle] Examples</span> : select radio buttons to view changes in
+  text area and toggle button
+</p>
+
+<input type="text" value="{{ colour }}" />
+<input type="radio" (click)="toggle()" />Toggle
+<input type="radio" name="colorset" (click)="setcolor('red')" />Red
+<input type="radio" name="colorset" (click)="setcolor('yellow')" />Yellow
+<input type="radio" name="colorset" (click)="setcolor('green')" />Green
+<input type="radio" name="colorset" (click)="setcolor('orange')" />Orange
+<input type="radio" name="colorset" (click)="setcolor('blue')" />Blue
+<h3 [ngStyle]="{ color: colour }">
+  This para colour will change upon clicking
+</h3>
+<p [ngStyle]="{ backgroundColor: colour }">background color changes</p>
+<p
+  [ngStyle]="
+    choice ? { backgroundColor: colour } : { backgroundColor: 'white' }
+  "
+>
+  choice toggle background color changes
+</p>
+
+<h4>2. *ngFor Array Examples</h4>
+<ul>
+  <li *ngFor="let name of names">{{ name }}</li>
+</ul>
+
+<select name="" id="">
+  <option value="" selected disabled>select one</option>
+  <option value="" *ngFor="let name of names">{{ name }}</option>
+</select>
+
+<h4>3. *ngIf Examples</h4>
+<label for="">Increment :</label>
+<button (click)="Increment()">+</button>
+<br />
+<label for="">Decrement :</label>
+<button (click)="Decrement()">-</button>
+
+<p>current amount is {{ amount }}</p>
+<div *ngIf="amount > 2000">
+  <p>Amount is greater than 2000</p>
+</div>
+<div *ngIf="amount < 2000">
+  <p>Amount is less than 2000</p>
+</div>
+
+<h4>4. [ngSwitch Examples]</h4>
+
+<select name="" id="" (change)="func($event)">
+  <option value="" selected disabled>select one</option>
+  <option value="{{ x }}" *ngFor="let x of names">{{ x }}</option>
+</select>
+
+<p>Choosen Name is :{{ choosen }}</p>
+<p>value of switch :</p>
+<div [ngSwitch]="choosen">
+  <p *ngSwitchCase="names[0]">HTML</p>
+  <p *ngSwitchCase="names[1]">CSS</p>
+  <p *ngSwitchCase="names[2]">Angular</p>
+  <p *ngSwitchCase="names[3]">React</p>
+  <p *ngSwitchDefault="names[4]">Javascript</p>
+</div>

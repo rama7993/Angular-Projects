@@ -1,0 +1,23 @@
+<div *ngIf="cart.length===0">
+    <p>Cart is Empty</p>
+</div>
+
+
+<div class="conatiner">
+    <div class="row">
+        <div class="col-md-4 " *ngFor="let p of cart">
+            <div class="card">
+                <div class="card-title">
+                    <h4>{{p.name}}</h4>
+                </div>
+                <div class="card-body">
+                    <img src="{{p.image}}" width="150px" height="150px" alt="">
+                    <h6>Quantity:{{p.qty}}</h6>
+                    <button class="btn btn-success" (click)="increment(p)">+</button>
+                    <button class="btn btn-danger" (click)="decrement(p)">-</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
