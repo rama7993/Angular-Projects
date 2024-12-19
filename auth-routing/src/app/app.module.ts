@@ -12,8 +12,6 @@ import { ProductEditComponent } from './components/product-edit/product-edit.com
 import { ProductAddComponent } from './components/product-add/product-add.component';
 import { ProductViewComponent } from './components/product-view/product-view.component';
 
-
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,12 +23,8 @@ import { ProductViewComponent } from './components/product-view/product-view.com
     ProductAddComponent,
     ProductViewComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    FormsModule
-  ],
+  imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

@@ -2,15 +2,14 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
- 
-  constructor(private router:Router){}
-  user:string=''
+  constructor(private router: Router) {}
+  user: string = '';
   login(user: string, password: string): boolean {
-    this.user=user
-    if (user === 'Rama'||'Admin' && password === 'password') {
+    this.user = user;
+    if (user === 'Rama' || ('Admin' && password === 'password')) {
       localStorage.setItem('username', user);
       return true;
     }
@@ -21,7 +20,7 @@ export class AuthService {
   logout(): any {
     localStorage.removeItem('username');
     //this.router.navigateByUrl('home')
-    this.router.navigate(['home'])
+    this.router.navigate(['home']);
   }
 
   getUser(): any {
@@ -32,10 +31,10 @@ export class AuthService {
     return this.getUser() !== null;
   }
 
-  isAdmin():Boolean{
-     if(this.user==="Admin"){
-      return true
-     }
-     return false
+  isAdmin(): Boolean {
+    if (this.user === 'Admin') {
+      return true;
+    }
+    return false;
   }
 }
