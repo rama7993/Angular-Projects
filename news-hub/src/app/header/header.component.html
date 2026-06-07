@@ -1,0 +1,64 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand fw-bold" routerLink="/home">
+      <i class="fas fa-newspaper me-2"></i>
+      NewsHub
+    </a>
+
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/home" routerLinkActive="active">
+            <i class="fas fa-home me-1"></i>
+            Home
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/tech" routerLinkActive="active">
+            <i class="fas fa-laptop-code me-1"></i>
+            Technology
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/sports" routerLinkActive="active">
+            <i class="fas fa-futbol me-1"></i>
+            Sports
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/business" routerLinkActive="active">
+            <i class="fas fa-chart-line me-1"></i>
+            Business
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/health" routerLinkActive="active">
+            <i class="fas fa-heartbeat me-1"></i>
+            Health
+          </a>
+        </li>
+      </ul>
+
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/search" routerLinkActive="active">
+            <i class="fas fa-search me-1"></i>
+            Search
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,37 @@
+/* App Container Layout */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Main Content Area */
+.main-content {
+  flex: 1;
+  padding-bottom: 2rem;
+}
+
+/* Footer Styles */
+.app-footer {
+  background-color: #343a40;
+  color: #fff;
+  padding: 1.5rem 0;
+  margin-top: auto;
+  border-top: 1px solid #495057;
+}
+
+.app-footer p {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+/* Ensure proper spacing */
+body {
+  margin: 0;
+  padding: 0;
+}
+
+/* Loading state adjustments */
+.main-content .container {
+  min-height: 60vh;
+}

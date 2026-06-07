@@ -1,0 +1,15 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h1>Todo List</h1>
+      <input [(ngModel)]="newTask" type="text" class="form-control" />
+      <button class="btn btn-primary" (click)="addToList()">ADD TASK</button>
+      <div *ngFor="let x of items; let index = index">
+        <div class="h3">{{ x }}</div>
+        <button class="btn btn-danger" (click)="deleteTask(index)">
+          Delete
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

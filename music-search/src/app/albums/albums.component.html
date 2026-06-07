@@ -1,0 +1,227 @@
+<div class="container mt-5">
+  <!-- Back Button -->
+  <div class="back-button-container mb-4">
+    <button class="btn btn-outline-primary" (click)="back()">
+      <i class="fas fa-arrow-left me-2"></i>
+      Back to Search
+    </button>
+  </div>
+
+  <!-- Album Details -->
+  <div class="row justify-content-center" *ngIf="albums && albums.length">
+    <div class="col-lg-10 col-md-12 mb-4" *ngFor="let album of albums">
+      <div class="card album-detail-card">
+        <div class="album-header">
+          <div class="album-image-container">
+            <img
+              [src]="album.images[0]?.url || 'assets/default-album.png'"
+              class="album-image"
+              alt="Album Cover"
+              loading="lazy"
+            />
+          </div>
+          <div class="album-info">
+            <h2 class="album-name">{{ album.name }}</h2>
+            <div class="album-artists" *ngIf="album.artists">
+              <span class="artists-label">by</span>
+              <a
+                *ngFor="let artist of album.artists; let last = last"
+                [routerLink]="['/artists', artist.id]"
+                class="artist-link"
+              >
+                {{ artist.name }}<span *ngIf="!last">, </span>
+              </a>
+            </div>
+            <div class="album-stats">
+              <div class="stat-item" *ngIf="album.release_date">
+                <i class="fas fa-calendar"></i>
+                <span>Released: {{ formatDate(album.release_date) }}</span>
+              </div>
+              <div class="stat-item" *ngIf="album.total_tracks">
+                <i class="fas fa-music"></i>
+                <span>{{ album.total_tracks }} tracks</span>
+              </div>
+              <div class="stat-item" *ngIf="album.album_type">
+                <i class="fas fa-compact-disc"></i>
+                <span>{{ album.album_type | titlecase }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <!-- Album Information -->
+          <div
+            class="album-details-section"
+            *ngIf="album.label || album.copyrights"
+          >
+            <h5 class="section-title">
+              <i class="fas fa-info-circle me-2"></i>
+              Album Information
+            </h5>
+            <div class="album-details">
+              <div class="album-info-item" *ngIf="album.label">
+                <strong>Label:</strong> {{ album.label }}
+              </div>
+              <div
+                class="album-info-item"
+                *ngIf="album.copyrights && album.copyrights.length"
+              >
+                <strong>Copyright:</strong> {{ album.copyrights[0].text }}
+              </div>
+            </div>
+          </div>
+
+          <!-- Tracks List -->
+          <div
+            class="tracks-section"
+            *ngIf="album.tracks && album.tracks.items"
+          >
+            <h5 class="section-title">
+              <i class="fas fa-list me-2"></i>
+              Tracks ({{ album.tracks.items.length }})
+            </h5>
+            <div class="tracks-list">
+              <div
+                class="track-item"
+                *ngFor="let track of album.tracks.items; let i = index"
+              >
+                <div class="track-number">{{ i + 1 }}</div>
+                <div class="track-info">
+                  <div class="track-name">
+                    <a [routerLink]="['/tracks', track.id]" class="track-link">
+                      {{ track.name }}
+                    </a>
+                  </div>
+                  <div class="track-artists" *ngIf="track.artists">
+                    <span
+                      *ngFor="let artist of track.artists; let last = last"
+                      class="track-artist"
+                    >
+                      <a
+                        [routerLink]="['/artists', artist.id]"
+                        class="artist-link-small"
+                      >
+                        {{ artist.name }}<span *ngIf="!last">, </span>
+                      </a>
+                    </span>
+                  </div>
+                </div>
+                <div class="track-duration" *ngIf="track.duration_ms">
+                  {{ formatDuration(track.duration_ms) }}
+                </div>
+                <div class="track-actions">
+                  <button
+                    class="btn btn-sm btn-outline-primary"
+                    (click)="toggleFavorite(track.id, 'track')"
+                    title="Add to Favorites"
+                  >
+                    <i class="fas fa-heart"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- External Links -->
+          <div class="external-links" *ngIf="album.external_urls">
+            <h5 class="section-title">
+              <i class="fas fa-external-link-alt me-2"></i>
+              Listen on Spotify
+            </h5>
+            <a
+              [href]="album.external_urls.spotify"
+              target="_blank"
+              class="btn btn-spotify"
+            >
+              <i class="fab fa-spotify me-2"></i>
+              Open in Spotify
+            </a>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="action-buttons">
+            <button
+              class="btn btn-outline-primary"
+              (click)="toggleFavorite(album.id, 'album')"
+            >
+              <i class="fas fa-heart me-2"></i>
+              Add to Favorites
+            </button>
+            <button
+              class="btn btn-primary"
+              (click)="viewArtist(album.artists[0].id)"
+              *ngIf="album.artists && album.artists.length"
+            >
+              <i class="fas fa-user me-2"></i>
+              View Artist
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading State with Shimmer -->
+  <div *ngIf="loading" class="row justify-content-center">
+    <div class="col-lg-10 col-md-12 mb-4">
+      <div class="card shimmer-card">
+        <div class="album-header shimmer-header">
+          <div class="album-image-container">
+            <div class="shimmer-album-square"></div>
+          </div>
+          <div class="album-info">
+            <div class="shimmer-text shimmer-album-name"></div>
+            <div class="shimmer-text shimmer-artist"></div>
+            <div class="shimmer-stats">
+              <div class="shimmer-text shimmer-stat"></div>
+              <div class="shimmer-text shimmer-stat"></div>
+              <div class="shimmer-text shimmer-stat"></div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="shimmer-section">
+            <div class="shimmer-text shimmer-section-title"></div>
+            <div class="shimmer-info-items">
+              <div class="shimmer-text shimmer-info-item"></div>
+              <div class="shimmer-text shimmer-info-item"></div>
+            </div>
+          </div>
+          <div class="shimmer-section">
+            <div class="shimmer-text shimmer-section-title"></div>
+            <div class="shimmer-tracks">
+              <div
+                class="shimmer-track-item"
+                *ngFor="let _ of [].constructor(5).fill(0)"
+              >
+                <div class="shimmer-track-number"></div>
+                <div class="shimmer-track-info">
+                  <div class="shimmer-text shimmer-track-name-small"></div>
+                  <div class="shimmer-text shimmer-track-artist-small"></div>
+                </div>
+                <div class="shimmer-track-duration"></div>
+                <div class="shimmer-track-action"></div>
+              </div>
+            </div>
+          </div>
+          <div class="shimmer-actions">
+            <div class="shimmer-button-large"></div>
+            <div class="shimmer-button-large"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="!albums?.length && !loading" class="error-container">
+    <i class="fas fa-exclamation-triangle fa-3x text-warning mb-3"></i>
+    <h4>Album not found</h4>
+    <p class="text-muted">The album you're looking for could not be found.</p>
+    <button class="btn btn-primary" (click)="back()">
+      <i class="fas fa-arrow-left me-2"></i>
+      Back to Search
+    </button>
+  </div>
+</div>

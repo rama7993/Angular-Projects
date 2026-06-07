@@ -1,0 +1,129 @@
+// Light mode colors
+$background-light: rgb(248, 250, 252);
+$surface-light: rgb(255, 255, 255);
+$text-light: rgb(15, 23, 42);
+$primary-light: #7c3aed; // Violet-600 (Bold & Royal)
+$accent-light: #4c1d95; // Violet-900
+$success-light: #059669;
+$danger-light: #dc2626;
+$warning-light: #d97706;
+$info-light: #0891b2;
+$muted-text-light: #64748b;
+$highlight-light: #a78bfa; // Violet-400
+$border-light: #e2e8f0;
+$shadow-light: rgba(15, 23, 42, 0.08);
+$hover-light: #f5f3ff; // Light Violet tint
+$overlay-light: rgba(124, 58, 237, 0.05);
+
+// Gradient Variables - Royal Violet
+$gradient-primary-start: #7c3aed; // Violet-600
+$gradient-primary-end: #a78bfa; // Violet-400
+
+// Secondary Gradient - Deep Indigo
+$gradient-secondary-start: #1e1b4b; // Indigo-950
+$gradient-secondary-end: #312e81; // Indigo-900
+
+$glass-overlay-light: rgba(255, 255, 255, 0.3);
+$glass-overlay-dark: rgba(15, 23, 42, 0.6);
+
+$error-color: #ef4444;
+$error-light: rgba(239, 68, 68, 0.1);
+
+// Dark mode colors (Deep Navy & Violet)
+$background-dark: #0b1120; // Deep Navy
+$surface-dark: #111827;
+$text-dark: #f8fafc;
+$primary-dark: #8b5cf6; // Violet-500 (Vibrant in dark mode)
+$accent-dark: #a78bfa; // Violet-400
+$success-dark: #10b981;
+$danger-dark: #ef4444;
+$warning-dark: #f59e0b;
+$info-dark: #06b6d4;
+$muted-text-dark: #94a3b8;
+$highlight-dark: #c4b5fd; // Violet-300
+$border-dark: #1f2937;
+$shadow-dark: rgba(0, 0, 0, 0.5);
+$hover-dark: #1e1b4b; // Deep Indigo hover
+$overlay-dark: rgba(124, 58, 237, 0.05);
+
+// Mixin for light mode
+@mixin light-theme() {
+  --background-color: #{$background-light};
+  --surface-color: #{$surface-light};
+  --text-color: #{$text-light};
+  --primary-color: #{$primary-light};
+  --accent-color: #{$accent-light};
+  --success-color: #{$success-light};
+  --danger-color: #{$danger-light};
+  --warning-color: #{$warning-light};
+  --info-color: #{$info-light};
+  --muted-text-color: #{$muted-text-light};
+  --highlight-color: #{$highlight-light};
+  --border-color: #{$border-light};
+  --shadow-color: #{$shadow-light};
+  --hover-color: #{$hover-light};
+  --overlay-color: #{$overlay-light};
+  --gradient-primary-start: #{$gradient-primary-start};
+  --gradient-primary-end: #{$gradient-primary-end};
+  --gradient-secondary-start: #{$gradient-secondary-start};
+  --gradient-secondary-end: #{$gradient-secondary-end};
+  --glass-overlay: #{$glass-overlay-light};
+  --error-color: #{$error-color};
+  --error-light: #{$error-light};
+
+  // RGB Components for Opacity
+  --primary-rgb: 124, 58, 237; // Violet-600
+  --text-rgb: 15, 23, 42; // Slate-900
+  --background-rgb: 248, 250, 252;
+  --surface-rgb: 255, 255, 255;
+  --hero-bg: #0b1120; // Force dark hero in light mode for contrast
+  --hero-text-color: #ffffff;
+  --hero-text-color: #ffffff;
+  --hero-muted-color: rgba(255, 255, 255, 0.8);
+  --hero-glass-overlay: #{$glass-overlay-dark}; // Force dark overlay for premium look
+}
+
+// Mixin for dark mode
+@mixin dark-theme() {
+  --background-color: #{$background-dark};
+  --surface-color: #{$surface-dark};
+  --text-color: #{$text-dark};
+  --primary-color: #{$primary-dark};
+  --accent-color: #{$accent-dark};
+  --success-color: #{$success-dark};
+  --danger-color: #{$danger-dark};
+  --warning-color: #{$warning-dark};
+  --info-color: #{$info-dark};
+  --muted-text-color: #{$muted-text-dark};
+  --highlight-color: #{$highlight-dark};
+  --border-color: #{$border-dark};
+  --shadow-color: #{$shadow-dark};
+  --hover-color: #{$hover-dark};
+  --overlay-color: #{$overlay-dark};
+  --gradient-primary-start: #{$gradient-primary-start};
+  --gradient-primary-end: #{$gradient-primary-end};
+  --gradient-secondary-start: #{$gradient-secondary-start};
+  --gradient-secondary-end: #{$gradient-secondary-end};
+  --glass-overlay: #{$glass-overlay-dark};
+  --error-color: #{$error-color};
+  --error-light: #{$error-light};
+
+  // RGB Components for Opacity
+  --primary-rgb: 139, 92, 246; // Violet-500
+  --text-rgb: 248, 250, 252; // Slate-50
+  --background-rgb: 11, 17, 32;
+  --surface-rgb: 17, 24, 39;
+  --hero-bg: #0b1120;
+  --hero-text-color: var(--text-color);
+  --hero-text-color: var(--text-color);
+  --hero-muted-color: var(--muted-text-color);
+  --hero-glass-overlay: var(--glass-overlay);
+}
+
+// Bootstrap theme variables overrides
+$primary: #7c3aed;
+$secondary: #1e1b4b;
+$success: #10b981;
+$info: #06b6d4;
+$warning: #f59e0b;
+$danger: #ef4444;

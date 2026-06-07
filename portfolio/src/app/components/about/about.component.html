@@ -1,0 +1,87 @@
+<section id="about" class="about-section">
+  <div class="heading mb-4 text-center">
+    <span><i class="pi pi-user"></i></span>
+    <span>About Me</span>
+  </div>
+
+  <div class="container">
+    <div class="about-content">
+      <div class="about-text">
+        <div class="about-intro">
+          <h2>Hi, I'm <span class="highlight">Rama Koti Reddy Yerram</span></h2>
+          <h3>Senior Angular Architect & Performance Engineer</h3>
+          <p class="intro-text">
+            A passionate B.Tech graduate in Computer Science from NIT Rourkela
+            (2022) with hands-on experience building modern web applications. I
+            specialize in Angular development and am continuously expanding my
+            expertise across the full technology stack.
+          </p>
+        </div>
+
+        <div class="about-details">
+          <div class="detail-section">
+            <h4><i class="pi pi-code"></i> Technical Expertise</h4>
+            <p>
+              I have extensive experience with <strong>Angular</strong>,
+              <strong>TypeScript</strong>, <strong>JavaScript</strong>,
+              <strong>SCSS</strong>, and <strong>HTML</strong>. My frontend
+              skills are complemented by solid knowledge of backend technologies
+              including <strong>Node.js</strong>, <strong>MongoDB</strong>, and
+              <strong>React</strong>.
+            </p>
+          </div>
+
+          <div class="detail-section">
+            <h4><i class="pi pi-cog"></i> Development Approach</h4>
+            <p>
+              I approach every challenge with a problem-solving mindset,
+              focusing on writing
+              <strong>clean</strong>, <strong>scalable</strong>, and
+              <strong>maintainable</strong> code. My experience spans multiple
+              programming languages including <strong>SQL</strong>,
+              <strong>C++</strong>, <strong>Java</strong>, and
+              <strong>Python</strong>.
+            </p>
+          </div>
+
+          <div class="detail-section">
+            <h4><i class="pi pi-star"></i> Career Goals</h4>
+            <p>
+              Currently working as a Software Developer at Satisfic, I'm
+              actively pursuing my goal of becoming a comprehensive full-stack
+              developer. I'm passionate about creating high-performance
+              applications that deliver exceptional user experiences.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-stats">
+        <div class="stats-grid">
+          <div *ngFor="let stat of stats; let i = index" class="stat-card">
+            <div class="stat-icon">
+              <i [class]="stat.icon"></i>
+            </div>
+            <div class="stat-content">
+              <h3>{{ stat.value }}</h3>
+              <p>{{ stat.label }}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="about-highlights">
+          <h4>What I Do Best</h4>
+          <div class="highlight-list">
+            <div
+              *ngFor="let highlight of highlights; let i = index"
+              class="highlight-item"
+            >
+              <i class="pi pi-check-circle"></i>
+              <span>{{ highlight }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

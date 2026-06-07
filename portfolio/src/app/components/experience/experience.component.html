@@ -1,0 +1,110 @@
+<section id="experience" class="experience-section">
+  <div class="heading mb-4 text-center">
+    <span><i class="pi pi-briefcase"></i></span>
+    <span>Professional Journey</span>
+  </div>
+
+  <div class="container">
+    <!-- Experience Overview -->
+    <div class="experience-overview">
+      <div class="overview-grid">
+        <div class="overview-card">
+          <div class="overview-icon">
+            <i class="pi pi-building"></i>
+          </div>
+          <div class="overview-content">
+            <h3>{{ experienceStats.companies }}</h3>
+            <p>Companies</p>
+          </div>
+        </div>
+        <div class="overview-card">
+          <div class="overview-icon">
+            <i class="pi pi-calendar"></i>
+          </div>
+          <div class="overview-content">
+            <h3>{{ experienceStats.totalYears }}</h3>
+            <p>Years Experience</p>
+          </div>
+        </div>
+        <div class="overview-card">
+          <div class="overview-icon">
+            <i class="pi pi-star"></i>
+          </div>
+          <div class="overview-content">
+            <h3>{{ experienceStats.achievements }}</h3>
+            <p>Key Achievements</p>
+          </div>
+        </div>
+        <div class="overview-card">
+          <div class="overview-icon">
+            <i class="pi pi-cog"></i>
+          </div>
+          <div class="overview-content">
+            <h3>{{ experienceStats.technologies }}</h3>
+            <p>Technologies</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="experience-list">
+      <div
+        *ngFor="let exp of experiences; let i = index"
+        class="experience-item"
+      >
+        <div class="experience-card">
+          <div class="card-header">
+            <div class="company-info">
+              <div class="company-logo">
+                <img
+                  [src]="exp.logo"
+                  alt="{{ exp.companyName }} Logo"
+                  class="logo-image"
+                />
+              </div>
+              <div class="company-details">
+                <h3 class="designation">{{ exp.designation }}</h3>
+                <h4 class="company-name">{{ exp.companyName }}</h4>
+                <div class="duration">
+                  <i class="pi pi-calendar"></i>
+                  <span>{{ exp.duration }}</span>
+                </div>
+              </div>
+            </div>
+            <div class="status-badge">
+              <span class="badge">{{
+                exp.duration.includes("Present") ? "Current" : "Completed"
+              }}</span>
+            </div>
+          </div>
+
+          <div class="card-body">
+            <div class="description-section">
+              <p class="description">{{ exp.description }}</p>
+            </div>
+
+            <div class="achievements-section">
+              <h5 class="section-title">
+                <i class="pi pi-star"></i>
+                Key Achievements & Responsibilities
+              </h5>
+              <div class="achievements-grid">
+                <div
+                  *ngFor="let detail of exp.details; let j = index"
+                  class="achievement-item"
+                >
+                  <div class="achievement-icon">
+                    <i class="pi pi-check-circle"></i>
+                  </div>
+                  <div class="achievement-content">
+                    <p>{{ detail }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

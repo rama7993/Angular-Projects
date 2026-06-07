@@ -1,0 +1,258 @@
+<div class="container mt-5">
+  <!-- Enhanced Search Form -->
+  <div class="search-container">
+    <form
+      #searchForm="ngForm"
+      (ngSubmit)="onSubmit(searchForm)"
+      class="search-form"
+    >
+      <div class="search-input-group">
+        <div class="search-type-selector">
+          <select 
+            class="form-select search-type-select" 
+            [(ngModel)]="type" 
+            name="type"
+            (change)="onTypeChange()"
+          >
+            <option *ngFor="let searchType of searchTypes" [value]="searchType.value">
+              {{ searchType.icon }} {{ searchType.label }}
+            </option>
+          </select>
+        </div>
+        <div class="search-input-wrapper">
+          <input
+            type="text"
+            class="form-control search-input"
+            [placeholder]="'Search for ' + getSearchTypeLabel().toLowerCase() + '...'"
+            name="search"
+            [(ngModel)]="query"
+            required
+          />
+          <button class="btn btn-primary search-btn" type="submit" [disabled]="!query.trim()">
+            <i class="fas fa-search"></i>
+          </button>
+          <button 
+            class="btn btn-outline-secondary clear-btn" 
+            type="button" 
+            (click)="resetSearch()"
+            *ngIf="hasSearched"
+            title="Clear Search"
+          >
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <!-- Error Message -->
+  <div *ngIf="error" class="alert alert-danger mt-3" role="alert">
+    <i class="fas fa-exclamation-triangle me-2"></i>
+    {{ error }}
+  </div>
+
+  <!-- Search Results -->
+  <div *ngIf="searchResults?.length && !loading">
+    <div class="results-header">
+      <h2 class="results-title">
+        <i class="fas fa-music me-2"></i>
+        {{ getResultCount() }} {{ getSearchTypeLabel() }} Found
+      </h2>
+    </div>
+    
+    <div class="row">
+      <!-- Tracks Results -->
+      <ng-container *ngIf="type === 'tracks'">
+        <div
+          class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4"
+          *ngFor="let track of searchResults"
+        >
+        <div class="card music-card track-card">
+          <div class="card-image-container">
+            <img
+              [src]="track.data.albumOfTrack.coverArt.sources[0].url"
+              class="card-img-top"
+              alt="Album Cover"
+              loading="lazy"
+            />
+            <div class="card-overlay">
+              <button 
+                class="btn btn-play" 
+                (click)="togglePlayPause(track.data.previewUrl)"
+                *ngIf="track.data.previewUrl"
+              >
+                <i class="fas" [ngClass]="isPlaying(track.data.previewUrl) ? 'fa-pause' : 'fa-play'"></i>
+              </button>
+              <div class="play-indicator" *ngIf="isCurrentTrack(track.data.previewUrl) && audioState.isPlaying">
+                <div class="sound-waves">
+                  <div class="wave"></div>
+                  <div class="wave"></div>
+                  <div class="wave"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <h6 class="card-title">
+              <a [routerLink]="['/tracks', track.data.id]" class="music-link">
+                {{ track.data.name }}
+              </a>
+            </h6>
+            <p class="card-text">
+              <a
+                [routerLink]="['/albums', track.data.albumOfTrack.id]"
+                class="music-link secondary"
+              >
+                {{ track.data.albumOfTrack.name }}
+              </a>
+            </p>
+            <div class="card-actions">
+              <button class="btn btn-sm btn-outline-primary" (click)="toggleFavorite(track.data.id, 'track')">
+                <i class="fas fa-heart"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        </div>
+      </ng-container>
+
+      <!-- Artists Results -->
+      <ng-container *ngIf="type === 'artists'">
+        <div
+          class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4"
+          *ngFor="let artist of searchResults"
+        >
+        <div class="card music-card artist-card">
+          <div class="card-image-container">
+            <img
+              [src]="artist.data.visuals.avatarImage?.sources[0]?.url || 'assets/default-artist.png'"
+              class="card-img-top"
+              alt="Artist"
+              loading="lazy"
+            />
+            <div class="card-overlay">
+              <button class="btn btn-play" [routerLink]="['/artists', artist.data.id]">
+                <i class="fas fa-user"></i>
+              </button>
+            </div>
+          </div>
+          <div class="card-body">
+            <h6 class="card-title">
+              <a [routerLink]="['/artists', artist.data.id]" class="music-link">
+                {{ artist.data.profile.name }}
+              </a>
+            </h6>
+            <p class="card-text">
+              <span class="text-muted">{{ artist.data.stats.followers }} followers</span>
+            </p>
+            <div class="card-actions">
+              <button class="btn btn-sm btn-outline-primary" (click)="toggleFavorite(artist.data.id, 'artist')">
+                <i class="fas fa-heart"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        </div>
+      </ng-container>
+
+      <!-- Albums Results -->
+      <ng-container *ngIf="type === 'albums'">
+        <div
+          class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4"
+          *ngFor="let album of searchResults"
+        >
+        <div class="card music-card album-card">
+          <div class="card-image-container">
+            <img
+              [src]="album.data.coverArt.sources[0].url"
+              class="card-img-top"
+              alt="Album Cover"
+              loading="lazy"
+            />
+            <div class="card-overlay">
+              <button class="btn btn-play" [routerLink]="['/albums', album.data.id]">
+                <i class="fas fa-compact-disc"></i>
+              </button>
+            </div>
+          </div>
+          <div class="card-body">
+            <h6 class="card-title">
+              <a [routerLink]="['/albums', album.data.id]" class="music-link">
+                {{ album.data.name }}
+              </a>
+            </h6>
+            <p class="card-text">
+              <span class="text-muted">{{ album.data.date.year }}</span>
+            </p>
+            <div class="card-actions">
+              <button class="btn btn-sm btn-outline-primary" (click)="toggleFavorite(album.data.id, 'album')">
+                <i class="fas fa-heart"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+
+  <!-- Loading State with Shimmer -->
+  <div *ngIf="loading">
+    <div class="results-header">
+      <h2 class="results-title">
+        <i class="fas fa-music me-2"></i>
+        Searching for {{ getSearchTypeLabel().toLowerCase() }}...
+      </h2>
+    </div>
+    <div class="row">
+      <div
+        class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4"
+        *ngFor="let _ of [].constructor(8).fill(0)"
+      >
+        <div class="card shimmer-card">
+          <div class="card-image-container shimmer-image">
+            <div class="shimmer-placeholder"></div>
+          </div>
+          <div class="card-body">
+            <div class="shimmer-text shimmer-title"></div>
+            <div class="shimmer-text shimmer-subtitle"></div>
+            <div class="shimmer-actions">
+              <div class="shimmer-button"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- No Results (only show after user has searched) -->
+  <div *ngIf="hasSearched && !searchResults?.length && !loading">
+    <div class="no-results-container">
+      <i class="fas fa-search fa-3x text-muted mb-3"></i>
+      <h4>No {{ getSearchTypeLabel().toLowerCase() }} found</h4>
+      <p class="text-muted">Try searching with different keywords or check your spelling.</p>
+      <button class="btn btn-primary mt-3" (click)="resetSearch()">
+        <i class="fas fa-search me-2"></i>
+        Try Another Search
+      </button>
+    </div>
+  </div>
+
+  <!-- Welcome Message (only show when user hasn't searched yet) -->
+  <div *ngIf="!hasSearched && !loading">
+    <div class="welcome-container">
+      <i class="fas fa-music fa-4x text-primary mb-4"></i>
+      <h2>Welcome to Music Search</h2>
+      <p class="lead">Discover your favorite tracks, artists, and albums from Spotify</p>
+             <div class="search-suggestions">
+               <h5>Try searching for:</h5>
+               <div class="suggestion-tags">
+                 <span class="badge bg-secondary me-2 mb-2" (click)="query = 'Arijit Singh'; performSearch()">Arijit Singh</span>
+                 <span class="badge bg-secondary me-2 mb-2" (click)="query = 'Shreya Ghoshal'; performSearch()">Shreya Ghoshal</span>
+                 <span class="badge bg-secondary me-2 mb-2" (click)="query = 'A.R. Rahman'; performSearch()">A.R. Rahman</span>
+                 <span class="badge bg-secondary me-2 mb-2" (click)="query = 'Neha Kakkar'; performSearch()">Neha Kakkar</span>
+               </div>
+             </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,108 @@
+<div class="layout-wrapper">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="logo-icon"><i class="fa fa-layer-group"></i></div>
+      <h2>Practise App</h2>
+    </div>
+
+    <ul class="nav-links">
+      <li class="nav-section">CORE FEATURES</li>
+      <li routerLinkActive="active">
+        <a routerLink="/todo">
+          <i class="fa fa-check-square"></i>
+          <span>Todo List</span>
+        </a>
+      </li>
+      <li routerLinkActive="active">
+        <a routerLink="/sample">
+          <i class="fa fa-code"></i>
+          <span>Practise</span>
+        </a>
+      </li>
+      <li routerLinkActive="active">
+        <a routerLink="/pipe">
+          <i class="fa fa-filter"></i>
+          <span>Pipes</span>
+        </a>
+      </li>
+      <li routerLinkActive="active">
+        <a routerLink="/product">
+          <i class="fa-solid fa-box"></i>
+          <span>Products</span>
+        </a>
+      </li>
+      <li routerLinkActive="active">
+        <a routerLink="/cart">
+          <i class="fa fa-shopping-cart"></i>
+          <span>Cart</span>
+        </a>
+      </li>
+
+      <li routerLinkActive="active">
+        <a routerLink="/rxjs">
+          <i class="fa fa-bolt"></i>
+          <span>RxJS</span>
+        </a>
+      </li>
+
+      <!-- Assignments section -->
+      <li class="nav-section mt-4">ASSIGNMENTS</li>
+      <li class="assignment" routerLinkActive="active">
+        <a routerLink="/assgn1"
+          ><span class="assn-badge">1</span> Assignment-1</a
+        >
+      </li>
+      <li class="assignment" routerLinkActive="active">
+        <a routerLink="/assgn2"
+          ><span class="assn-badge">2</span> Assignment-2</a
+        >
+      </li>
+      <li class="assignment" routerLinkActive="active">
+        <a routerLink="/assgn3"
+          ><span class="assn-badge">3</span> Assignment-3</a
+        >
+      </li>
+      <li class="assignment" routerLinkActive="active">
+        <a routerLink="/assgn5"
+          ><span class="assn-badge">4</span> Assignment-4</a
+        >
+      </li>
+      <li class="assignment" routerLinkActive="active">
+        <a routerLink="/assgn4"
+          ><span class="assn-badge">5</span> Assignment-5</a
+        >
+      </li>
+      <li class="assignment" routerLinkActive="active">
+        <a routerLink="/assgn6"
+          ><span class="assn-badge">6</span> Assignment-6</a
+        >
+      </li>
+      <li class="assignment" routerLinkActive="active">
+        <a routerLink="/assgn7"
+          ><span class="assn-badge">7</span> Assignment-7</a
+        >
+      </li>
+      <li class="assignment" routerLinkActive="active">
+        <a routerLink="/assgn8"
+          ><span class="assn-badge">8</span> Assignment-8</a
+        >
+      </li>
+    </ul>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <header class="top-header">
+      <div class="header-title">Angular Playground</div>
+      <div class="user-profile">
+        <div class="avatar"><i class="fa fa-user"></i></div>
+      </div>
+    </header>
+    <div class="content-body">
+      <div class="content-card">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </main>
+</div>

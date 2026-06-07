@@ -1,0 +1,184 @@
+@import "./styles/variables";
+@import "primeicons/primeicons.css";
+@import "../node_modules/bootstrap/scss/bootstrap";
+@import "aos/dist/aos.css";
+
+body.dark {
+  @include dark-theme();
+}
+body.light {
+  @include light-theme();
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family:
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
+  line-height: 1.6;
+  overflow-x: hidden;
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+section {
+  width: 100%;
+  padding: 1.5rem;
+}
+
+.heading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  margin-bottom: 3rem;
+  gap: 0.75rem;
+
+  i {
+    color: var(--primary-color);
+    font-size: 2.2rem;
+  }
+
+  span:last-child {
+    color: var(--text-color);
+    font-weight: bold;
+    position: relative;
+    padding-bottom: 5px;
+    text-align: center;
+    line-height: 1.3;
+
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: -5px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 50px;
+      height: 3px;
+      background: linear-gradient(
+        45deg,
+        var(--primary-color),
+        var(--gradient-secondary-start)
+      );
+      border-radius: 2px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    font-size: 1.5rem;
+    gap: 0.5rem;
+
+    i {
+      font-size: 2rem;
+    }
+
+    span:last-child {
+      &::after {
+        bottom: -2px;
+      }
+    }
+  }
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+// Global button enhancements
+.btn {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.2),
+      transparent
+    );
+    transition: left 0.5s;
+  }
+
+  &:hover::before {
+    left: 100%;
+  }
+}
+
+// Glassmorphism utility classes
+.glass {
+  background: var(--overlay-color);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+}
+
+.glass-dark {
+  background: var(--overlay-color);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+}
+
+// Loading animation
+.loading {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid var(--border-color);
+  border-radius: 50%;
+  border-top-color: var(--primary-color);
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// Custom scrollbar
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background-color);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    45deg,
+    var(--primary-color),
+    var(--gradient-secondary-start)
+  );
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(
+    45deg,
+    var(--primary-color),
+    var(--gradient-secondary-end)
+  );
+}

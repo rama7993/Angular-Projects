@@ -1,0 +1,142 @@
+<div class="container mt-5">
+  <!-- Back Button -->
+  <div class="back-button-container mb-4">
+    <button class="btn btn-outline-primary" (click)="back()">
+      <i class="fas fa-arrow-left me-2"></i>
+      Back to Search
+    </button>
+  </div>
+
+  <!-- Artist Details -->
+  <div class="row justify-content-center" *ngIf="artists && artists.length">
+    <div
+      class="col-lg-6 col-md-8 col-sm-12 mb-4"
+      *ngFor="let artist of artists"
+    >
+      <div class="card artist-detail-card">
+        <div class="artist-header">
+          <div class="artist-image-container">
+            <img
+              [src]="artist.images[0]?.url || 'assets/default-artist.png'"
+              class="artist-image"
+              alt="Artist Profile"
+              loading="lazy"
+            />
+          </div>
+          <div class="artist-info">
+            <h2 class="artist-name">{{ artist.name }}</h2>
+            <div class="artist-stats">
+              <div class="stat-item">
+                <i class="fas fa-users"></i>
+                <span
+                  >{{ formatNumber(artist.followers.total) }} followers</span
+                >
+              </div>
+              <div class="stat-item" *ngIf="artist.popularity">
+                <i class="fas fa-chart-line"></i>
+                <span>Popularity: {{ artist.popularity }}/100</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <!-- Genres -->
+          <div
+            class="genres-section"
+            *ngIf="artist.genres && artist.genres.length"
+          >
+            <h5 class="section-title">
+              <i class="fas fa-music me-2"></i>
+              Genres
+            </h5>
+            <div class="genres-container">
+              <span
+                class="badge genre-badge"
+                *ngFor="let genre of artist.genres"
+              >
+                {{ genre }}
+              </span>
+            </div>
+          </div>
+
+          <!-- External Links -->
+          <div class="external-links" *ngIf="artist.external_urls">
+            <h5 class="section-title">
+              <i class="fas fa-external-link-alt me-2"></i>
+              Listen on Spotify
+            </h5>
+            <a
+              [href]="artist.external_urls.spotify"
+              target="_blank"
+              class="btn btn-spotify"
+            >
+              <i class="fab fa-spotify me-2"></i>
+              Open in Spotify
+            </a>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="action-buttons">
+            <button
+              class="btn btn-outline-primary"
+              (click)="toggleFavorite(artist.id, 'artist')"
+            >
+              <i class="fas fa-heart me-2"></i>
+              Add to Favorites
+            </button>
+            <button class="btn btn-primary" (click)="viewAlbums(artist.id)">
+              <i class="fas fa-compact-disc me-2"></i>
+              View Albums
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading State with Shimmer -->
+  <div *ngIf="loading" class="row justify-content-center">
+    <div class="col-lg-6 col-md-8 col-sm-12 mb-4">
+      <div class="card shimmer-card">
+        <div class="artist-header shimmer-header">
+          <div class="artist-image-container">
+            <div class="shimmer-circle"></div>
+          </div>
+          <div class="artist-info">
+            <div class="shimmer-text shimmer-name"></div>
+            <div class="shimmer-stats">
+              <div class="shimmer-text shimmer-stat"></div>
+              <div class="shimmer-text shimmer-stat"></div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="shimmer-section">
+            <div class="shimmer-text shimmer-section-title"></div>
+            <div class="shimmer-tags">
+              <div class="shimmer-tag"></div>
+              <div class="shimmer-tag"></div>
+              <div class="shimmer-tag"></div>
+            </div>
+          </div>
+          <div class="shimmer-actions">
+            <div class="shimmer-button-large"></div>
+            <div class="shimmer-button-large"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="!artists?.length && !loading" class="error-container">
+    <i class="fas fa-exclamation-triangle fa-3x text-warning mb-3"></i>
+    <h4>Artist not found</h4>
+    <p class="text-muted">The artist you're looking for could not be found.</p>
+    <button class="btn btn-primary" (click)="back()">
+      <i class="fas fa-arrow-left me-2"></i>
+      Back to Search
+    </button>
+  </div>
+</div>

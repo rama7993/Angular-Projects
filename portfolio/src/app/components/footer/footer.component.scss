@@ -1,0 +1,151 @@
+.footer-section {
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+  color: white;
+  padding: 3rem 0 1rem;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+      45deg,
+      rgba(var(--primary-rgb), 0.1),
+      rgba(var(--primary-rgb), 0.05)
+    );
+    z-index: 1;
+  }
+
+  .footer-content {
+    position: relative;
+    z-index: 2;
+  }
+
+  .footer-main {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 3rem;
+    margin-bottom: 2rem;
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .footer-brand {
+      h3 {
+        color: white;
+        font-weight: 700;
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        background: linear-gradient(
+          45deg,
+          var(--gradient-primary-start),
+          var(--gradient-primary-end)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      p {
+        color: #ccc;
+        line-height: 1.6;
+        margin-bottom: 0.5rem;
+        font-size: 0.95rem;
+
+        &:first-of-type {
+          font-weight: 600;
+          color: var(--primary-color);
+        }
+      }
+    }
+
+    .footer-links {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+
+      @media (max-width: 768px) {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+
+      .link-group {
+        h4 {
+          color: white;
+          font-weight: 600;
+          font-size: 1rem;
+          margin-bottom: 1rem;
+          position: relative;
+
+          &::after {
+            content: "";
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 30px;
+            height: 2px;
+            background: linear-gradient(
+              45deg,
+              var(--gradient-primary-start),
+              var(--gradient-primary-end)
+            );
+            border-radius: 1px;
+          }
+        }
+
+        ul {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+
+          li {
+            margin-bottom: 0.5rem;
+
+            a {
+              color: #ccc;
+              text-decoration: none;
+              font-size: 0.9rem;
+              transition: all 0.3s ease;
+              display: block;
+              padding: 0.25rem 0;
+
+              &:hover {
+                color: var(--primary-color);
+                transform: translateX(5px);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 1.5rem;
+    text-align: center;
+
+    .footer-copyright {
+      p {
+        color: #999;
+        font-size: 0.9rem;
+        margin-bottom: 0.5rem;
+
+        &:last-child {
+          margin-bottom: 0;
+          font-size: 0.8rem;
+
+          i {
+            margin: 0 0.25rem;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,54 @@
+html,
+body {
+  height: 100%;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    sans-serif;
+}
+
+/* Global Link Styling */
+a {
+  color: #1db954; /* Spotify Green */
+  text-decoration: none;
+  transition: color 0.3s ease-in-out;
+}
+
+a:hover {
+  color: #17a44a; /* Darker Green on Hover */
+  text-decoration: underline;
+}
+
+/* Primary Button Styling */
+.btn-primary {
+  background: #1db954 !important;
+  border-color: #1db954 !important;
+  transition: background 0.3s ease-in-out, border 0.3s ease-in-out;
+}
+
+.btn-primary:hover {
+  background: #17a44a !important;
+  border-color: #17a44a !important;
+}
+
+/* Outline Button Styling */
+.btn-outline-primary {
+  color: #1db954 !important;
+  border-color: #1db954 !important;
+}
+
+.btn-outline-primary:hover {
+  background: #1db954 !important;
+  color: #fff !important;
+}
+
+/* Active & Focus States */
+.btn-primary:focus,
+.btn-primary:active {
+  background: #148c3d !important;
+  border-color: #148c3d !important;
+  box-shadow: 0 0 0 0.2rem rgba(29, 185, 84, 0.5) !important;
+}
+
+.btn-outline-primary:focus,
+.btn-outline-primary:active {
+  box-shadow: 0 0 0 0.2rem rgba(29, 185, 84, 0.5) !important;
+}

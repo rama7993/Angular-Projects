@@ -1,0 +1,79 @@
+<section class="hero-section" id="home">
+  <div class="particles-container" id="particles-js"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-text">
+      <h1 class="hero-title">
+        Hi, I'm <span class="highlight">Rama Koti Reddy</span>
+      </h1>
+      <h2 class="hero-subtitle">
+        <span class="typing-text"></span>
+      </h2>
+      <p class="hero-description">
+        Architecting high-performance digital experiences with a focus on
+        scalability and user-centric design. Specializing in advanced Angular
+        architectures and modern web performance optimization.
+      </p>
+      <div class="hero-buttons">
+        <button class="btn btn-primary btn-glow" (click)="downloadResume()">
+          <i class="pi pi-cloud-download"></i> Download Resume
+        </button>
+        <button
+          class="btn btn-outline-primary"
+          (click)="scrollToSection('projects')"
+        >
+          <i class="pi pi-eye"></i> View My Work
+        </button>
+      </div>
+
+      <!-- Coding Platform Links -->
+      <div class="coding-platforms">
+        <span class="platform-label">Connect & Follow:</span>
+        <div class="platform-links">
+          <a
+            *ngFor="let platform of codingPlatforms"
+            [href]="platform.url"
+            target="_blank"
+            class="platform-link"
+            [title]="platform.name"
+            [ngStyle]="{ '--hover-color': platform.hoverColor }"
+          >
+            <i [class]="platform.iconClass"></i>
+            <span class="platform-name">{{ platform.name }}</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Tech Stack Indicators -->
+      <div class="tech-stack">
+        <span class="tech-label">Tech Stack:</span>
+        <div class="tech-badges">
+          <span class="tech-badge" *ngFor="let tech of techStack">{{
+            tech
+          }}</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-image">
+      <div class="profile-card">
+        <div class="profile-image">
+          <img src="assets/images/my-passport-photo.jpg" alt="Rama Koti" />
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Floating Elements -->
+  <div class="floating-elements">
+    <div class="floating-shape shape-1"></div>
+    <div class="floating-shape shape-2"></div>
+    <div class="floating-shape shape-3"></div>
+    <div class="floating-shape shape-4"></div>
+  </div>
+
+  <div class="scroll-indicator">
+    <div class="scroll-text">Scroll Down</div>
+    <div class="scroll-arrow">
+      <i class="pi pi-angle-down"></i>
+    </div>
+  </div>
+</section>

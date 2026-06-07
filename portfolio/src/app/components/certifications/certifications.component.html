@@ -1,0 +1,130 @@
+<section id="certifications" class="certifications-section">
+  <div class="heading mb-4 text-center">
+    <span><i class="pi pi-trophy"></i></span>
+    <span>Certifications & Achievements</span>
+  </div>
+
+  <div class="container">
+    <!-- Certification Stats -->
+    <div class="cert-stats mb-5">
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-icon">
+            <i class="pi pi-trophy"></i>
+          </div>
+          <div class="stat-content">
+            <h3>{{ certificationStats.total }}</h3>
+            <p>Total Certifications</p>
+          </div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-icon">
+            <i class="pi pi-desktop"></i>
+          </div>
+          <div class="stat-content">
+            <h3>{{ certificationStats.frontend }}</h3>
+            <p>Frontend</p>
+          </div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-icon">
+            <i class="pi pi-server"></i>
+          </div>
+          <div class="stat-content">
+            <h3>{{ certificationStats.backend }}</h3>
+            <p>Backend</p>
+          </div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-icon">
+            <i class="pi pi-file-pdf"></i>
+          </div>
+          <div class="stat-content">
+            <h3>{{ certificationStats.algorithms }}</h3>
+            <p>Algorithms</p>
+          </div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-icon">
+            <i class="pi pi-database"></i>
+          </div>
+          <div class="stat-content">
+            <h3>{{ certificationStats.database }}</h3>
+            <p>Database</p>
+          </div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-icon">
+            <i class="pi pi-trophy"></i>
+          </div>
+          <div class="stat-content">
+            <h3>{{ certificationStats.hackerrank }}</h3>
+            <p>HackerRank</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filter Buttons -->
+    <div class="cert-filter mb-4">
+      <div class="filter-buttons">
+        <button
+          *ngFor="let category of categories"
+          class="filter-btn"
+          [class.active]="selectedCategory === category"
+          (click)="filterCertifications(category)"
+        >
+          {{ category }}
+        </button>
+      </div>
+    </div>
+
+    <!-- Certifications Grid -->
+    <div class="certifications-grid">
+      <div
+        *ngFor="let cert of filteredCertifications; let i = index"
+        class="certification-card"
+        [class.hackerrank-cert]="cert.platform === 'HackerRank'"
+        [style.animation-delay]="i * 0.15 + 's'"
+      >
+        <div class="cert-header">
+          <div class="cert-icon">
+            <i [class]="cert.icon"></i>
+          </div>
+          <div class="cert-badge">
+            <span class="category-badge">{{ cert.category }}</span>
+            <span
+              class="level-badge"
+              [style.background-color]="getLevelColor(cert.level)"
+            >
+              {{ cert.level }}
+            </span>
+            <span class="type-badge">
+              <i [class]="getTypeIcon(cert.type)"></i>
+              {{ cert.type }}
+            </span>
+            <span class="date-badge">{{ cert.date }}</span>
+          </div>
+        </div>
+
+        <div class="cert-content">
+          <h4 class="cert-title">{{ cert.name }}</h4>
+          <p class="cert-platform">{{ cert.platform }}</p>
+          <p class="cert-description">{{ cert.description }}</p>
+        </div>
+
+        <div class="cert-footer">
+          <a
+            [href]="cert.link"
+            target="_blank"
+            class="cert-link"
+            [attr.data-cert-id]="cert.certId"
+          >
+            <i class="pi pi-external-link"></i>
+            View Certificate
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

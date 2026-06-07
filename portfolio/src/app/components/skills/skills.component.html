@@ -1,0 +1,130 @@
+<section id="skills" class="skills-section">
+  <div class="heading mb-4 text-center">
+    <span><i class="fa-solid fa-chalkboard-user"></i></span>
+    <span>Skills & Expertise</span>
+  </div>
+
+  <div class="container">
+    <!-- Skills Overview Chart -->
+    <div class="row mb-5">
+      <div class="col-lg-6">
+        <div class="chart-container">
+          <h3 class="chart-title">Skills Distribution</h3>
+          <canvas id="skillChart"></canvas>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="skills-summary">
+          <h3 class="summary-title">Technical Expertise</h3>
+          <div class="expertise-item">
+            <div class="expertise-icon">
+              <i class="pi pi-desktop"></i>
+            </div>
+            <div class="expertise-content">
+              <h4>Frontend Development</h4>
+              <p>
+                Expert in Angular, React, TypeScript, and modern CSS frameworks
+              </p>
+            </div>
+          </div>
+          <div class="expertise-item">
+            <div class="expertise-icon">
+              <i class="pi pi-server"></i>
+            </div>
+            <div class="expertise-content">
+              <h4>Backend Development</h4>
+              <p>
+                Proficient in Node.js, NestJS, Express, Java, and Python
+              </p>
+            </div>
+          </div>
+          <div class="expertise-item">
+            <div class="expertise-icon">
+              <i class="pi pi-database"></i>
+            </div>
+            <div class="expertise-content">
+              <h4>Database Management</h4>
+              <p>Experience with MongoDB, PostgreSQL, and MySQL</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Skills Filter -->
+    <div class="skills-filter mb-4">
+      <div class="filter-buttons">
+        <button
+          class="filter-btn"
+          [class.active]="selectedCategory === 'All'"
+          (click)="filterSkills('All')"
+        >
+          All Skills
+        </button>
+        <button
+          class="filter-btn"
+          [class.active]="selectedCategory === 'Frontend'"
+          (click)="filterSkills('Frontend')"
+        >
+          Frontend
+        </button>
+        <button
+          class="filter-btn"
+          [class.active]="selectedCategory === 'Backend'"
+          (click)="filterSkills('Backend')"
+        >
+          Backend
+        </button>
+        <button
+          class="filter-btn"
+          [class.active]="selectedCategory === 'Database'"
+          (click)="filterSkills('Database')"
+        >
+          Database
+        </button>
+      </div>
+    </div>
+
+    <!-- Skills Grid -->
+    <div class="skills-grid">
+      <div
+        *ngFor="let skill of filteredSkills; let i = index"
+        class="skill-card"
+        [style.animation-delay]="i * 0.1 + 's'"
+      >
+        <div class="skill-header">
+          <div
+            class="skill-image-container"
+            [style.background-color]="skill.color + '20'"
+          >
+            <img
+              [src]="skill.image"
+              [alt]="skill.name"
+              class="skill-image"
+              [style.filter]="skill.name === 'Express' && isDarkMode ? 'invert(1) brightness(1.5)' : 'none'"
+            />
+          </div>
+          <div class="skill-info">
+            <h4 class="skill-name">{{ skill.name }}</h4>
+            <span
+              class="skill-category"
+              [style.background-color]="(skill.name === 'Express' && isDarkMode ? '#ffffff' : skill.color) + '20'"
+              [style.color]="skill.name === 'Express' && isDarkMode ? '#ffffff' : skill.color"
+              >{{ skill.category }}</span
+            >
+          </div>
+        </div>
+        <div class="skill-progress">
+          <div class="progress-bar">
+            <div
+              class="progress-fill"
+              [style.width.%]="skill.level"
+              [attr.data-level]="skill.level + '%'"
+            ></div>
+          </div>
+          <span class="skill-level">{{ skill.level }}%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

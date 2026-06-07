@@ -1,0 +1,53 @@
+<section id="education" class="education-section">
+  <div class="heading mb-4 text-center">
+    <span><i class="pi pi-graduation-cap"></i></span>
+    <span>Education</span>
+  </div>
+
+  <div class="container">
+    <div class="education-grid">
+      <div
+        class="education-card"
+        *ngFor="let item of educationItems; let i = index"
+      >
+        <div class="education-header">
+          <div class="degree-info">
+            <h3 class="degree-title">{{ item.degree }}</h3>
+            <h4 class="institution-name">{{ item.college }}</h4>
+          </div>
+          <div class="education-period">
+            <span class="duration">{{ item.duration }}</span>
+            <span class="graduation-date">Graduated: {{ item.date }}</span>
+          </div>
+        </div>
+
+        <div class="education-body">
+          <p class="description">{{ item.description }}</p>
+
+          <div class="achievement-section">
+            <div class="achievement-item" *ngIf="item.CGPA">
+              <span class="achievement-label">CGPA</span>
+              <span class="achievement-value">{{ item.CGPA }}</span>
+            </div>
+
+            <div class="achievement-item" *ngIf="item.Percentage">
+              <span class="achievement-label">Percentage</span>
+              <span class="achievement-value">{{ item.Percentage }}</span>
+            </div>
+          </div>
+
+          <div class="education-actions" *ngIf="item.driveLink">
+            <a
+              [href]="item.driveLink"
+              target="_blank"
+              class="btn btn-outline-primary"
+            >
+              <i class="pi pi-external-link"></i>
+              View Certificate
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
