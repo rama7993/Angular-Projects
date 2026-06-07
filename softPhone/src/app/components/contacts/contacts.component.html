@@ -1,0 +1,144 @@
+<div class="contacts-container">
+  <div class="contacts-header">
+    <h2>Contacts</h2>
+    <button class="btn btn-primary" (click)="showAddContactForm()">
+      <i class="fas fa-plus"></i>
+      Add Contact
+    </button>
+  </div>
+
+  <!-- Search Bar -->
+  <div class="search-container">
+    <div class="input-group">
+      <span class="input-group-text">
+        <i class="fas fa-search"></i>
+      </span>
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Search contacts..."
+        [(ngModel)]="searchTerm"
+        (input)="onSearchChange()"
+      />
+    </div>
+  </div>
+
+  <!-- Add/Edit Contact Form -->
+  <div class="contact-form" *ngIf="showAddForm">
+    <div class="card">
+      <div class="card-header">
+        <h5>{{ editingContact ? "Edit Contact" : "Add New Contact" }}</h5>
+      </div>
+      <div class="card-body">
+        <form (ngSubmit)="saveContact()">
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="contactName" class="form-label">Name *</label>
+              <input
+                type="text"
+                class="form-control"
+                id="contactName"
+                [(ngModel)]="newContact.name"
+                name="name"
+                required
+              />
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="contactNumber" class="form-label"
+                >Phone Number *</label
+              >
+              <input
+                type="tel"
+                class="form-control"
+                id="contactNumber"
+                [(ngModel)]="newContact.number"
+                name="number"
+                required
+              />
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="contactEmail" class="form-label">Email</label>
+            <input
+              type="email"
+              class="form-control"
+              id="contactEmail"
+              [(ngModel)]="newContact.email"
+              name="email"
+            />
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-success me-2">
+              <i class="fas fa-save"></i>
+              {{ editingContact ? "Update" : "Add" }} Contact
+            </button>
+            <button
+              type="button"
+              class="btn btn-secondary"
+              (click)="cancelEdit()"
+            >
+              <i class="fas fa-times"></i>
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contacts List -->
+  <div class="contacts-list">
+    <div *ngIf="filteredContacts.length === 0" class="no-contacts">
+      <i class="fas fa-users fa-3x text-muted"></i>
+      <h4>No contacts found</h4>
+      <p>
+        {{
+          searchTerm
+            ? "Try adjusting your search terms"
+            : "Add your first contact to get started"
+        }}
+      </p>
+    </div>
+
+    <div class="contact-item" *ngFor="let contact of filteredContacts">
+      <div class="contact-avatar">
+        <div class="avatar-circle" [title]="contact.name">
+          {{ getInitials(contact.name) }}
+        </div>
+      </div>
+
+      <div class="contact-info">
+        <h6 class="contact-name">{{ contact.name }}</h6>
+        <p class="contact-number">{{ contact.number }}</p>
+        <p class="contact-email" *ngIf="contact.email">{{ contact.email }}</p>
+        <small class="text-muted" *ngIf="contact.lastCall">
+          Last call: {{ contact.lastCall | date : "short" }}
+        </small>
+      </div>
+
+      <div class="contact-actions">
+        <button
+          class="btn btn-sm btn-outline-primary me-2"
+          (click)="callContact(contact)"
+          title="Call"
+        >
+          <i class="fas fa-phone"></i>
+        </button>
+        <button
+          class="btn btn-sm btn-outline-secondary me-2"
+          (click)="editContact(contact)"
+          title="Edit"
+        >
+          <i class="fas fa-edit"></i>
+        </button>
+        <button
+          class="btn btn-sm btn-outline-danger"
+          (click)="deleteContact(contact)"
+          title="Delete"
+        >
+          <i class="fas fa-trash"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

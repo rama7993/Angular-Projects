@@ -1,0 +1,22 @@
+<h3 class="heading text-center">Video Gallery</h3>
+<div class="container">
+  <!-- video-list -->
+  <div class="video_list">
+    <div
+      class="Vid"
+      *ngFor="let _ of [].constructor(9); let i = index"
+      (click)="onVdoClick($event)"
+    >
+      <video src="../assets/videos/vid_{{ i + 1 }}.mp4"></video>
+      <h5 class="title">{{i+1}}.video title</h5>
+    </div>
+  </div>
+
+  <!-- Main-video -->
+  <div class="main_video">
+    <div class="Vid">
+      <video src="../assets/videos/vid_1.mp4" controls muted autoplay></video>
+      <h3 class="title">1.video title</h3>
+    </div>
+  </div>
+</div>

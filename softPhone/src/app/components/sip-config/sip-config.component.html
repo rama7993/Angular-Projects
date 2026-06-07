@@ -1,0 +1,319 @@
+<div class="sip-config-container">
+  <div class="config-header">
+    <h2><i class="fas fa-server me-2"></i>SIP Configuration</h2>
+    <p>Configure your SIP account to make real phone calls</p>
+  </div>
+
+  <!-- Connection Status -->
+  <div class="connection-status">
+    <div class="status-indicator">
+      <i
+        class="fas fa-circle"
+        [class.text-success]="isConnected"
+        [class.text-danger]="!isConnected"
+      ></i>
+      <span [class]="getStatusColor()">{{ connectionStatus }}</span>
+    </div>
+  </div>
+
+  <!-- SIP Provider Selection -->
+  <div class="provider-selection mb-4">
+    <label class="form-label">Choose SIP Provider</label>
+    <select
+      class="form-select"
+      [(ngModel)]="selectedProvider"
+      (change)="onProviderChange()"
+    >
+      <option *ngFor="let provider of availableProviders" [ngValue]="provider">
+        {{ provider.name }} - {{ provider.description }}
+      </option>
+    </select>
+  </div>
+
+  <!-- SIP Configuration Form -->
+  <div class="config-form">
+    <div class="card">
+      <div class="card-header">
+        <h5><i class="fas fa-cog me-2"></i>SIP Account Settings</h5>
+      </div>
+      <div class="card-body">
+        <form (ngSubmit)="connectToSip()">
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="sipServer" class="form-label">SIP Server *</label>
+              <input
+                type="text"
+                class="form-control"
+                id="sipServer"
+                [(ngModel)]="sipConfig.server"
+                name="server"
+                placeholder="sip.example.com"
+                required
+              />
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="sipUsername" class="form-label">Username *</label>
+              <input
+                type="text"
+                class="form-control"
+                id="sipUsername"
+                [(ngModel)]="sipConfig.username"
+                name="username"
+                placeholder="your_username"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="sipPassword" class="form-label">Password *</label>
+              <input
+                type="password"
+                class="form-control"
+                id="sipPassword"
+                [(ngModel)]="sipConfig.password"
+                name="password"
+                placeholder="your_password"
+                required
+              />
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="displayName" class="form-label">Display Name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="displayName"
+                [(ngModel)]="sipConfig.displayName"
+                name="displayName"
+                placeholder="Your Name"
+              />
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button
+              type="submit"
+              class="btn btn-success me-2"
+              [disabled]="isConnected"
+            >
+              <i class="fas fa-plug me-2"></i>Connect
+            </button>
+            <button
+              type="button"
+              class="btn btn-danger"
+              (click)="disconnectFromSip()"
+              [disabled]="!isConnected"
+            >
+              <i class="fas fa-unlink me-2"></i>Disconnect
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Free SIP Providers Info -->
+  <div class="providers-info mt-4">
+    <div class="card">
+      <div class="card-header">
+        <h5><i class="fas fa-info-circle me-2"></i>Free SIP Providers</h5>
+      </div>
+      <div class="card-body">
+        <div class="row g-3 provider-grid">
+          <div class="col-md-6">
+            <div class="provider-card p-3">
+              <div class="d-flex align-items-center mb-2">
+                <i class="fas fa-gift text-success me-2"></i>
+                <strong>FreeSIP.org</strong>
+                <span class="badge bg-success ms-auto">Testing</span>
+              </div>
+              <ul class="list-unstyled small text-muted mb-3">
+                <li>Free SIP account; no credit card</li>
+                <li>Great for quick validation</li>
+              </ul>
+              <div class="d-flex gap-2">
+                <a
+                  class="btn btn-sm btn-outline-primary"
+                  href="https://www.freesip.org"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <i class="fas fa-external-link-alt me-1"></i>Visit
+                </a>
+                <button
+                  class="btn btn-sm btn-primary"
+                  (click)="
+                    applyProvider({ name: 'FreeSIP', server: 'freesip.org' })
+                  "
+                >
+                  <i class="fas fa-check me-1"></i>Apply
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="provider-card p-3">
+              <div class="d-flex align-items-center mb-2">
+                <i class="fas fa-phone text-primary me-2"></i>
+                <strong>SIP.US</strong>
+                <span class="badge bg-info ms-auto">US Numbers</span>
+              </div>
+              <ul class="list-unstyled small text-muted mb-3">
+                <li>Free US numbers (incoming only)</li>
+                <li>Good for call receive tests</li>
+              </ul>
+              <div class="d-flex gap-2">
+                <a
+                  class="btn btn-sm btn-outline-primary"
+                  href="https://sip.us"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <i class="fas fa-external-link-alt me-1"></i>Visit
+                </a>
+                <button
+                  class="btn btn-sm btn-primary"
+                  (click)="applyProvider({ name: 'SIP.US', server: 'sip.us' })"
+                >
+                  <i class="fas fa-check me-1"></i>Apply
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="provider-card p-3">
+              <div class="d-flex align-items-center mb-2">
+                <i class="fas fa-mobile-alt text-info me-2"></i>
+                <strong>Linphone</strong>
+                <span class="badge bg-secondary ms-auto">Dev Friendly</span>
+              </div>
+              <ul class="list-unstyled small text-muted mb-3">
+                <li>Free SIP service</li>
+                <li>Apps on desktop and mobile</li>
+              </ul>
+              <div class="d-flex gap-2">
+                <a
+                  class="btn btn-sm btn-outline-primary"
+                  href="https://www.linphone.org"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <i class="fas fa-external-link-alt me-1"></i>Visit
+                </a>
+                <button
+                  class="btn btn-sm btn-primary"
+                  (click)="
+                    applyProvider({
+                      name: 'Linphone',
+                      server: 'sip.linphone.org'
+                    })
+                  "
+                >
+                  <i class="fas fa-check me-1"></i>Apply
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="provider-card p-3">
+              <div class="d-flex align-items-center mb-2">
+                <i class="fas fa-server text-warning me-2"></i>
+                <strong>Your Own Server</strong>
+                <span class="badge bg-warning text-dark ms-auto"
+                  >Self-host</span
+                >
+              </div>
+              <ul class="list-unstyled small text-muted mb-3">
+                <li>Asterisk / FreeSWITCH</li>
+                <li>Full control; best for production</li>
+              </ul>
+              <div class="d-flex gap-2">
+                <button
+                  class="btn btn-sm btn-outline-secondary"
+                  (click)="applyProvider({ name: 'Custom Server', server: '' })"
+                >
+                  <i class="fas fa-tools me-1"></i>Configure
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Setup Guide -->
+  <div class="setup-guide mt-4">
+    <div class="card">
+      <div class="card-header">
+        <h5><i class="fas fa-bolt me-2"></i>Quick Setup Guide</h5>
+      </div>
+      <div class="card-body">
+        <div class="row g-3">
+          <div class="col-md-8">
+            <ol class="setup-steps">
+              <li>
+                <strong>Choose a Provider</strong> — start with FreeSIP for
+                quick tests
+              </li>
+              <li>
+                <strong>Register Account</strong> — create a free account on
+                provider site
+              </li>
+              <li>
+                <strong>Get Credentials</strong> — username, password, server
+              </li>
+              <li>
+                <strong>Configure</strong> — paste credentials in the form above
+              </li>
+              <li><strong>Connect</strong> — click Connect to register</li>
+              <li><strong>Make Calls</strong> — use the Call Interface</li>
+            </ol>
+          </div>
+          <div class="col-md-4">
+            <div class="quick-actions p-3">
+              <div class="small text-muted mb-2">Sample Servers</div>
+              <div class="d-flex gap-2 flex-wrap">
+                <button
+                  class="btn btn-sm btn-outline-secondary"
+                  (click)="
+                    applyProvider({ name: 'FreeSIP', server: 'freesip.org' })
+                  "
+                >
+                  freesip.org
+                </button>
+                <button
+                  class="btn btn-sm btn-outline-secondary"
+                  (click)="
+                    applyProvider({
+                      name: 'Linphone',
+                      server: 'sip.linphone.org'
+                    })
+                  "
+                >
+                  sip.linphone.org
+                </button>
+                <button
+                  class="btn btn-sm btn-outline-secondary"
+                  (click)="applyProvider({ name: 'SIP.US', server: 'sip.us' })"
+                >
+                  sip.us
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="alert alert-info mt-3">
+          <i class="fas fa-lightbulb me-2"></i>
+          <strong>Tip:</strong> For testing, call another SIP account or use an
+          <a
+            href="https://www.voip-info.org/asterisk-echo-test/"
+            target="_blank"
+            >Echo Test</a
+          >.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

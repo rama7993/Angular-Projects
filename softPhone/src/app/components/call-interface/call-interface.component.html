@@ -1,0 +1,165 @@
+<div class="call-interface-container">
+  <!-- Call Status Header -->
+  <div class="call-status-header">
+    <div
+      class="status-indicator"
+      [class.connected]="callState?.isRegistered"
+      [class.in-call]="callState?.isInCall"
+    >
+      <i class="fas fa-circle"></i>
+      <span>{{ getStatusText() }}</span>
+    </div>
+    <div class="recording-indicator" *ngIf="recordingState?.isRecording">
+      <i class="fas fa-record-vinyl text-danger"></i>
+      <span>{{ formatDuration(recordingState?.duration || 0) }}</span>
+    </div>
+  </div>
+
+  <!-- Video Container -->
+  <div class="video-container" *ngIf="callState?.isInCall">
+    <div class="video-wrapper">
+      <video #remoteVideo class="remote-video" autoplay playsinline></video>
+      <video #localVideo class="local-video" autoplay playsinline muted></video>
+    </div>
+  </div>
+
+  <!-- Call Controls -->
+  <div class="call-controls">
+    <!-- Incoming Call -->
+    <div
+      *ngIf="!callState?.isInCall && callState?.currentCall"
+      class="incoming-call"
+    >
+      <div class="call-info">
+        <h3>Incoming Call</h3>
+        <p>{{ getCallerInfo() }}</p>
+      </div>
+      <div class="call-actions">
+        <button class="btn btn-success btn-lg me-3" (click)="answerCall()">
+          <i class="fas fa-phone"></i>
+          Answer
+        </button>
+        <button class="btn btn-danger btn-lg" (click)="rejectCall()">
+          <i class="fas fa-phone-slash"></i>
+          Reject
+        </button>
+      </div>
+    </div>
+
+    <!-- Active Call -->
+    <div
+      *ngIf="callState?.isInCall && callState?.currentCall"
+      class="active-call"
+    >
+      <div class="call-info">
+        <h3>Call in Progress</h3>
+        <p>{{ getCallerInfo() }}</p>
+        <div class="call-duration" *ngIf="recordingState?.isRecording">
+          Recording: {{ formatDuration(recordingState?.duration || 0) }}
+        </div>
+      </div>
+
+      <div class="call-actions">
+        <!-- Recording Controls -->
+        <div class="recording-controls mb-3">
+          <button
+            class="btn btn-outline-danger me-2"
+            *ngIf="!recordingState?.isRecording"
+            (click)="startRecording()"
+          >
+            <i class="fas fa-record-vinyl"></i>
+            Start Recording
+          </button>
+          <button
+            class="btn btn-danger me-2"
+            *ngIf="recordingState?.isRecording"
+            (click)="stopRecording()"
+          >
+            <i class="fas fa-stop"></i>
+            Stop Recording
+          </button>
+          <button
+            class="btn btn-outline-primary"
+            *ngIf="recordingState?.recordingUrl"
+            (click)="downloadRecording()"
+          >
+            <i class="fas fa-download"></i>
+            Download
+          </button>
+        </div>
+
+        <!-- Call Controls -->
+        <div class="call-controls-row">
+          <button class="btn btn-outline-secondary me-2" (click)="muteCall()">
+            <i class="fas fa-microphone"></i>
+          </button>
+          <button class="btn btn-outline-warning me-2" (click)="holdCall()">
+            <i class="fas fa-pause"></i>
+          </button>
+          <button class="btn btn-danger btn-lg" (click)="endCall()">
+            <i class="fas fa-phone-slash"></i>
+            End Call
+          </button>
+        </div>
+
+        <!-- In-call Keypad -->
+        <div class="dialer-pad mt-3">
+          <div class="row g-2">
+            <div class="col-4" *ngFor="let number of dialerNumbers">
+              <button
+                class="btn btn-outline-primary btn-lg w-100"
+                (click)="addToDialer(number)"
+              >
+                {{ number }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dialer -->
+    <div *ngIf="!callState?.isInCall" class="dialer">
+      <div class="dialer-pad">
+        <div class="row g-2">
+          <div class="col-4" *ngFor="let number of dialerNumbers">
+            <button
+              class="btn btn-outline-primary btn-lg w-100"
+              (click)="addToDialer(number)"
+            >
+              {{ number }}
+            </button>
+          </div>
+          <div class="col-4">
+            <button
+              class="btn btn-outline-secondary btn-lg w-100"
+              (click)="clearDialer()"
+            >
+              <i class="fas fa-backspace"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="dialer-display">
+        <input
+          type="text"
+          class="form-control form-control-lg text-center"
+          [(ngModel)]="dialerNumber"
+          placeholder="Enter number"
+        />
+      </div>
+
+      <div class="dialer-actions">
+        <button
+          class="btn btn-success btn-lg w-100"
+          [disabled]="!dialerNumber"
+          (click)="makeCall(dialerNumber)"
+        >
+          <i class="fas fa-phone"></i>
+          Call
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

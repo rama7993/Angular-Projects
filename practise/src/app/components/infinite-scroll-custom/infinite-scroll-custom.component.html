@@ -1,0 +1,18 @@
+<div class="infinite-container">
+  <h2>Infinite Scroll</h2>
+  <p>Scroll down to load more items automatically.</p>
+
+  <div class="items-list">
+    <div *ngFor="let item of items" class="list-item">
+      {{ item }}
+    </div>
+  </div>
+
+  <div *ngIf="isLoading" class="loader-container">
+    <div class="spinner"></div>
+    <span>Loading more items...</span>
+  </div>
+
+  <!-- Intersection Observer Sentinel -->
+  <div #scrollSentinel style="height: 1px;"></div>
+</div>

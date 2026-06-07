@@ -1,0 +1,42 @@
+<nav>
+  <a class="logo" routerLink="/">
+    <div class="logo-dot">♪</div>
+    Sportify
+  </a>
+  <div class="search-box">
+    <svg
+      width="13"
+      height="13"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      opacity=".5"
+    >
+      <circle cx="11" cy="11" r="8" />
+      <path d="m21 21-4.35-4.35" />
+    </svg>
+    <input
+      #globalSearchInput
+      type="text"
+      placeholder="Songs, artists, podcasts…"
+      (keyup.enter)="onGlobalSearch(globalSearchInput.value)"
+    />
+  </div>
+  <div class="nav-links">
+    <a
+      routerLink="/"
+      routerLinkActive="on"
+      [routerLinkActiveOptions]="{ exact: true }"
+      class="nav-a"
+      >Home</a
+    >
+    <a routerLink="/search" routerLinkActive="on" class="nav-a">Search</a>
+  </div>
+</nav>
+
+<main class="main-content">
+  <router-outlet></router-outlet>
+</main>
+
+<app-audio-player></app-audio-player>

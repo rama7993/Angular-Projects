@@ -1,0 +1,175 @@
+<div class="dashboard-container">
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="glow g1"></div>
+    <div class="glow g2"></div>
+    <div class="hero-inner">
+      <div class="h-badge">
+        <span class="pulse"></span>Now Streaming Worldwide
+      </div>
+      <h1>Music without<br />limits.</h1>
+      <p>
+        Discover millions of tracks, follow your favorite artists, and let the
+        music find you — all in one place.
+      </p>
+      <div class="h-stats">
+        <div class="h-stat">
+          <span class="h-num">80M+</span><span class="h-lbl">Songs</span>
+        </div>
+        <div class="h-div"></div>
+        <div class="h-stat">
+          <span class="h-num">4M+</span><span class="h-lbl">Artists</span>
+        </div>
+        <div class="h-div"></div>
+        <div class="h-stat">
+          <span class="h-num">200+</span><span class="h-lbl">Countries</span>
+        </div>
+      </div>
+      <div class="h-btns">
+        <button class="btn-p" (click)="scrollToTrending()">
+          <i class="fas fa-play"></i> Start Listening
+        </button>
+        <button class="btn-s" (click)="scrollToTrending()">
+          <i class="fas fa-fire"></i> What's Trending
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Genres -->
+  <div class="wrap">
+    <div class="genres">
+      <button
+        class="g-pill"
+        [class.on]="activeCategory === 'All'"
+        (click)="filterCategory('All')"
+      >
+        All
+      </button>
+      <button
+        class="g-pill"
+        *ngFor="let cat of categories"
+        [class.on]="activeCategory === cat.name"
+        (click)="viewCategory(cat, $event)"
+      >
+        {{ cat.name }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Main Grid Layout -->
+  <div class="two">
+    <!-- New Releases -->
+    <div class="sec">
+      <div class="sec-hd">
+        <div class="sec-title">
+          <div class="ico p"><i class="fa-solid fa-compact-disc"></i></div>
+          New Releases
+        </div>
+        <a class="va" (click)="viewAllAlbums()" style="cursor: pointer"
+          >View All <i class="fas fa-arrow-right"></i
+        ></a>
+      </div>
+
+      <div class="loading-container" *ngIf="loading.newReleases">
+        <div class="spinner-border text-primary" role="status"></div>
+      </div>
+
+      <div class="a-grid" *ngIf="!loading.newReleases">
+        <div
+          class="a-card"
+          *ngFor="let album of newReleases"
+          (click)="viewAlbum(album)"
+        >
+          <div class="a-thumb">
+            <img
+              *ngIf="getImageUrl(album.images)"
+              [src]="getImageUrl(album.images)"
+              [alt]="album.name"
+            />
+            <div class="pov"><i class="fas fa-play"></i></div>
+          </div>
+          <div class="a-info">
+            <div class="a-title">{{ album.name }}</div>
+            <div class="a-artist">{{ album.artists[0].name }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Trending Now -->
+    <div class="sec sec-r">
+      <div class="sec-hd">
+        <div class="sec-title">
+          <div class="ico r"><i class="fa-solid fa-fire"></i></div>
+          Trending Now
+        </div>
+        <a class="va" (click)="viewAllTracks()" style="cursor: pointer"
+          >View All <i class="fas fa-arrow-right"></i
+        ></a>
+      </div>
+
+      <div class="t-list">
+        <div
+          class="t-row"
+          *ngFor="let track of trendingTracks; let i = index"
+          (click)="playTrack(track)"
+        >
+          <div class="t-rk">{{ i + 1 }}</div>
+          <div class="t-pl"><i class="fas fa-play"></i></div>
+          <div class="t-th">
+            <img
+              *ngIf="getImageUrl(track.album.images)"
+              [src]="getImageUrl(track.album.images)"
+              [alt]="track.name"
+            />
+          </div>
+          <div class="t-inf">
+            <div class="t-nm">{{ track.name }}</div>
+            <div class="t-ar">{{ track.artists[0].name }}</div>
+          </div>
+          <div class="t-mt">
+            <span class="bdg hot" *ngIf="i < 3">🔥 HOT</span>
+            <div class="t-dur" *ngIf="i >= 3">
+              {{ track.duration_ms | date: "mm:ss" }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Top Artists -->
+  <div class="bot-sec">
+    <div class="sec-hd">
+      <div class="sec-title">
+        <div class="ico g"><i class="fa-solid fa-user"></i></div>
+        Top Artists
+      </div>
+      <a class="va" (click)="viewAllArtists()" style="cursor: pointer"
+        >View All <i class="fas fa-arrow-right"></i
+      ></a>
+    </div>
+
+    <div class="ar-grid">
+      <div
+        class="ar-card"
+        *ngFor="let artist of trendingArtists"
+        (click)="viewArtist(artist)"
+      >
+        <div class="ar-av">
+          <img
+            *ngIf="getImageUrl(artist.images)"
+            [src]="getImageUrl(artist.images)"
+            [alt]="artist.name"
+          />
+        </div>
+        <div class="ar-nm">{{ artist.name }}</div>
+        <div class="ar-gn">{{ artist.genres?.[0] | titlecase }}</div>
+        <div class="ar-fl">
+          {{ formatNumber(artist.followers?.total) }} followers
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,133 @@
+.sip-config-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.config-header {
+  text-align: center;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #e9ecef;
+
+  h2 {
+    color: #495057;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+
+  p {
+    color: #6c757d;
+    margin: 0;
+  }
+}
+
+.connection-status {
+  text-align: center;
+  margin-bottom: 20px;
+
+  .status-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: 500;
+    font-size: 14px;
+  }
+}
+
+.provider-selection {
+  .form-select {
+    border-radius: 8px;
+    border: 1px solid #ced4da;
+    padding: 12px 15px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+
+    &:focus {
+      border-color: #80bdff;
+      box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
+  }
+}
+
+.config-form {
+  .card {
+    border: 1px solid #e9ecef;
+    border-radius: 12px;
+
+    .card-header {
+      background: #f8f9fa;
+      border-radius: 12px 12px 0 0;
+      border: none;
+      padding: 16px;
+    }
+
+    .card-body {
+      padding: 20px;
+
+      .form-label {
+        font-weight: 600;
+        color: #495057;
+        margin-bottom: 6px;
+      }
+
+      .form-control {
+        border-radius: 8px;
+        border: 1px solid #ced4da;
+        padding: 10px 12px;
+      }
+
+      .form-actions {
+        display: flex;
+        gap: 12px;
+        margin-top: 20px;
+        justify-content: center;
+      }
+    }
+  }
+}
+
+.providers-info {
+  .card {
+    border: 1px solid #e9ecef;
+    border-radius: 12px;
+
+    .card-header {
+      background: #f8f9fa;
+      border-bottom: 1px solid #e9ecef;
+      border-radius: 12px 12px 0 0;
+    }
+
+    .card-body {
+      .provider-grid {
+        .provider-card {
+          border: 1px solid #e9ecef;
+          border-radius: 12px;
+          background: #ffffff;
+        }
+      }
+    }
+  }
+}
+
+.setup-guide {
+  .card {
+    border: 1px solid #e9ecef;
+    border-radius: 12px;
+
+    .card-header {
+      background: #f8f9fa;
+      border-bottom: 1px solid #e9ecef;
+      border-radius: 12px 12px 0 0;
+    }
+
+    .card-body {
+      &.audio-card-body { padding: 20px; }
+      .quick-actions { background: #f8f9fa; border: 1px solid #e9ecef; border-radius: 10px; }
+      .form-actions .btn { min-width: 140px; }
+    }
+  }
+}
+

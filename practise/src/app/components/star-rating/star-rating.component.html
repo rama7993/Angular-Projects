@@ -1,0 +1,16 @@
+<div class="star-rating">
+  <span
+    *ngFor="let star of starsArray"
+    class="star"
+    (mouseenter)="onMouseEnter(star)"
+    (mouseleave)="onMouseLeave()"
+    (click)="setRating(star)"
+    [class.filled]="star <= (hoverState || rating)"
+    role="button"
+    tabindex="0"
+    (keyup.enter)="setRating(star)"
+  >
+    ★
+  </span>
+  <span class="rating-text">({{ rating }} / {{ maxStars }})</span>
+</div>

@@ -1,0 +1,35 @@
+<div class="posts">
+  <h2 class="posts__title">Posts List</h2>
+
+  <!-- Search Input -->
+  <input
+    type="search"
+    class="posts__search"
+    placeholder="Search posts..."
+    [(ngModel)]="searchText"
+    (input)="onSearch()"
+  />
+
+  <!-- Results Count -->
+  <p class="posts__count" *ngIf="filteredPosts.length">
+    Showing {{ filteredPosts.length }} of {{ posts.length }} results
+  </p>
+
+  <!-- No Results -->
+  <p class="posts__no-results" *ngIf="!filteredPosts.length">
+    No results found
+  </p>
+
+  <!-- Posts -->
+  <div *ngFor="let post of filteredPosts" class="posts__item">
+    <h4
+      class="posts__item-title"
+      [innerHTML]="post.title | highlight: searchText"
+    ></h4>
+
+    <p
+      class="posts__item-body"
+      [innerHTML]="post.body | highlight: searchText"
+    ></p>
+  </div>
+</div>

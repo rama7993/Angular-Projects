@@ -1,0 +1,13 @@
+<div class="timeline">
+  <div
+    *ngFor="let event of timelineEvents; let i = index"
+    [ngClass]="{ container: true, left: i % 2 === 0, right: i % 2 !== 0 }"
+  >
+    <div class="date">{{ event.date }}</div>
+    <i class="icon fa" [ngClass]="event.icon"></i>
+    <div class="content">
+      <h2>{{ event.title }}</h2>
+      <p>{{ event.description }}</p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,31 @@
+<div class="autocomplete-container">
+  <h2>Fruit Search (Autocomplete)</h2>
+  
+  <div class="search-box">
+    <div class="input-wrapper">
+      <i class="search-icon">🔍</i>
+      <input 
+        type="text" 
+        [value]="searchQuery" 
+        (input)="onSearchChange($event)"
+        (focus)="searchQuery.trim() ? showDropdown = true : null"
+        (blur)="hideDropdown()"
+        placeholder="Type a fruit name..."
+        autocomplete="off"
+      />
+      <div class="spinner-small" *ngIf="isLoading"></div>
+    </div>
+
+    <ul class="suggestions-dropdown" *ngIf="showDropdown && (suggestions.length > 0 || !isLoading && searchQuery.trim())">
+      <li 
+        *ngFor="let suggestion of suggestions" 
+        (click)="selectSuggestion(suggestion)"
+        class="suggestion-item">
+        {{ suggestion }}
+      </li>
+      <li *ngIf="suggestions.length === 0 && !isLoading && searchQuery.trim()" class="no-results">
+        No results found for "{{ searchQuery }}"
+      </li>
+    </ul>
+  </div>
+</div>

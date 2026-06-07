@@ -1,0 +1,35 @@
+<div class="counter-container">
+  <h2>Counter with History</h2>
+  
+  <div class="display">
+    <span class="value">{{ currentValue }}</span>
+  </div>
+
+  <div class="controls">
+    <button (click)="decrement()">-1</button>
+    <button (click)="increment()">+1</button>
+    <button (click)="multiply()">x2</button>
+    <button (click)="divide()">/2</button>
+  </div>
+
+  <div class="history-controls">
+    <button (click)="undo()" [disabled]="!canUndo" class="action-btn">
+      <i class="icon">↺</i> Undo
+    </button>
+    <button (click)="redo()" [disabled]="!canRedo" class="action-btn">
+      Redo <i class="icon">↻</i>
+    </button>
+  </div>
+
+  <div class="history-log">
+    <h4>History Stack:</h4>
+    <div class="stack">
+      <span *ngFor="let val of history; let i = index" 
+            class="history-item"
+            [class.active]="i === pointer"
+            [class.future]="i > pointer">
+        {{ val }}
+      </span>
+    </div>
+  </div>
+</div>

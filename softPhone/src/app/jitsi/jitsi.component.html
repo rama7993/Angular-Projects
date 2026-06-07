@@ -1,0 +1,79 @@
+<div class="container py-3">
+  <div class="card mb-3">
+    <div class="card-header d-flex align-items-center">
+      <i class="fas fa-video me-2"></i>
+      <strong>Jitsi Meet</strong>
+    </div>
+    <div class="card-body">
+      <div class="controls-bar mb-3">
+        <div class="row g-2 align-items-end">
+          <div class="col-md-3">
+            <label class="form-label">Contact</label>
+            <select
+              class="form-select"
+              [(ngModel)]="selectedContactId"
+              (change)="onSelectContact()"
+            >
+              <option [ngValue]="''">None</option>
+              <option *ngFor="let c of contacts" [ngValue]="c.id">
+                {{ c.name }} ({{ c.number }})
+              </option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label class="form-label">Room Name</label>
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="roomName"
+              placeholder="Enter room name"
+            />
+          </div>
+          <div class="col-md-3">
+            <label class="form-label">Display Name</label>
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="displayName"
+              placeholder="Your name"
+            />
+          </div>
+          <div class="col-md-3 d-flex gap-2 justify-content-md-end">
+            <button class="btn btn-primary" (click)="startMeeting()">
+              <i class="fas fa-play me-1"></i> Start
+            </button>
+            <button
+              class="btn btn-outline-danger"
+              (click)="endMeeting()"
+              [disabled]="!api"
+            >
+              <i class="fas fa-stop me-1"></i> End
+            </button>
+            <button
+              class="btn btn-outline-secondary"
+              (click)="generateRoom()"
+              title="Generate Room"
+            >
+              <i class="fas fa-random"></i>
+            </button>
+            <button
+              class="btn btn-outline-primary"
+              (click)="copyInvite()"
+              title="Copy Invite"
+            >
+              <i class="fas fa-link"></i>
+            </button>
+            <button
+              class="btn btn-outline-info"
+              (click)="openExternal()"
+              title="Open in New Tab"
+            >
+              <i class="fas fa-external-link-alt"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div #jitsiMeetContainer class="jitsi-meet-container"></div>
+    </div>
+  </div>
+</div>

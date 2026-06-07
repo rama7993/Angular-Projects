@@ -1,4 +1,25 @@
-﻿**/node_modules/
-**/.angular/
+﻿# Dependencies
+node_modules/
+**/node_modules/
+
+# Angular build output
+dist/
 **/dist/
-**/*.env
+.angular/
+**/.angular/
+
+# Environment files
+*.env
+.env.*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+**/.vscode/
+
+# Logs
+*.log
+npm-debug.log*

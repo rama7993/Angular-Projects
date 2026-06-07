@@ -1,0 +1,15 @@
+<div class="board">
+  <div
+    class="cell"
+    *ngFor="let cell of board; let i = index"
+    [class.winner-cell]="winningCells.includes(i)"
+    (click)="handleClick(i)"
+  >
+    {{ cell }}
+  </div>
+</div>
+
+<h2 *ngIf="winner">Winner: {{ winner }}</h2>
+<h2 *ngIf="!winner">Turn: {{ currentPlayer }}</h2>
+
+<button (click)="resetGame()">Reset Game</button>

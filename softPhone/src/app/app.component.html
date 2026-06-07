@@ -1,0 +1,101 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">
+      <i class="fas fa-phone me-2"></i>
+      SoftPhone
+    </a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link" routerLink="/sip-config">
+            <i class="fas fa-server me-1"></i>
+            SIP Setup
+          </a>
+        </li>
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link" routerLink="/call-interface">
+            <i class="fas fa-phone me-1"></i>
+            Call Interface
+          </a>
+        </li>
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link" routerLink="/contacts">
+            <i class="fas fa-users me-1"></i>
+            Contacts
+          </a>
+        </li>
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link" routerLink="/call-history">
+            <i class="fas fa-history me-1"></i>
+            Call History
+          </a>
+        </li>
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link" routerLink="/jitsi">
+            <i class="fas fa-video me-1"></i>
+            Jitsi Meet
+          </a>
+        </li>
+      </ul>
+      <ul class="navbar-nav">
+        <li class="nav-item dropdown">
+          <button
+            class="btn btn-outline-light btn-sm dropdown-toggle settings-toggle"
+            type="button"
+            data-bs-toggle="dropdown"
+            aria-label="Settings"
+          >
+            <i class="fas fa-cog"></i>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li>
+              <a class="dropdown-item" routerLink="/sip-config">
+                <i class="fas fa-server me-2"></i>SIP Configuration
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="/audio-settings">
+                <i class="fas fa-volume-up me-2"></i>Audio Settings
+              </a>
+            </li>
+            <li><hr class="dropdown-divider" /></li>
+            <li>
+              <a class="dropdown-item" href="#" (click)="exportData()">
+                <i class="fas fa-download me-2"></i>Export Data
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<main class="main-content">
+  <router-outlet></router-outlet>
+</main>
+
+<!-- Toast Container for Notifications -->
+<div class="toast-container position-fixed top-0 end-0 p-3">
+  <div id="liveToast" class="toast" role="alert">
+    <div class="toast-header">
+      <i class="fas fa-info-circle text-primary me-2"></i>
+      <strong class="me-auto">SoftPhone</strong>
+      <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+    </div>
+    <div class="toast-body">
+      <!-- Toast content will be inserted here -->
+    </div>
+  </div>
+</div>

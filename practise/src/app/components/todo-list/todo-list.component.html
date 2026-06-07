@@ -1,0 +1,60 @@
+<div class="todo-container">
+  <h2>Todo List</h2>
+  <div class="input-group">
+    <input
+      type="text"
+      [(ngModel)]="newTaskText"
+      (keyup.enter)="addTask()"
+      placeholder="Add a new task..."
+    />
+    <button (click)="addTask()">Add</button>
+  </div>
+
+  <div class="filters">
+    <button [class.active]="filter === 'all'" (click)="filter = 'all'">
+      All
+    </button>
+    <button [class.active]="filter === 'active'" (click)="filter = 'active'">
+      Active
+    </button>
+    <button
+      [class.active]="filter === 'completed'"
+      (click)="filter = 'completed'"
+    >
+      Completed
+    </button>
+  </div>
+
+  <ul class="todo-list">
+    <li *ngFor="let todo of filteredTodos" [class.completed]="todo.completed">
+      <div class="todo-content" *ngIf="!todo.isEditing">
+        <input
+          type="checkbox"
+          [checked]="todo.completed"
+          (change)="toggleComplete(todo)"
+        />
+        <span>{{ todo.text }}</span>
+      </div>
+      <div class="edit-mode" *ngIf="todo.isEditing">
+        <input
+          type="text"
+          [value]="todo.text"
+          #editInput
+          (keyup.enter)="saveEdit(todo, editInput.value)"
+          (blur)="saveEdit(todo, editInput.value)"
+          autofocus
+        />
+      </div>
+      <div class="actions">
+        <button
+          class="edit-btn"
+          *ngIf="!todo.isEditing"
+          (click)="editTask(todo)"
+        >
+          Edit
+        </button>
+        <button class="delete-btn" (click)="deleteTask(todo.id)">Delete</button>
+      </div>
+    </li>
+  </ul>
+</div>

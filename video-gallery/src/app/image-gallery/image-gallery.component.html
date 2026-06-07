@@ -1,0 +1,38 @@
+<h3 class="heading text-center">Image Gallery</h3>
+<div class="container">
+  <!-- Image-list -->
+  <div class="image_list">
+    <div
+      class="Img"
+      *ngFor="let image of images"
+      (click)="onImageClick($event)"
+    >
+      <img [src]="image?.urlToImage" alt="" />
+      <div class="d-flex flex-column">
+        <h6 class="title">{{ image?.source?.name }}</h6>
+        <h6 class="author" style="overflow-wrap:break-word">{{ image?.author }}</h6>
+        <a
+          role="button"
+          href="{{ image?.url }}"
+          target="_blank"
+          class="btn btn-secondary"
+          >Read More</a
+        >
+      </div>
+    </div>
+  </div>
+
+  <!-- Main-Image-->
+  <div class="main_image">
+    <div class="Img">
+      <img src="" alt="sample Image" />
+      <div class="d-flex flex-column">
+        <h6 class="title"></h6>
+        <h6 class="author"></h6>
+        <a role="button" href="" target="_blank" class="btn btn-primary"
+          >Read More</a
+        >
+      </div>
+    </div>
+  </div>
+</div>

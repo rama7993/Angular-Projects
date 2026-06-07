@@ -1,0 +1,14 @@
+<div *ngFor="let item of items">
+  <app-checkbox
+    [label]="item.label"
+    [checked]="item.checked"
+    [indeterminate]="item.indeterminate"
+    (checkedChange)="onCheckedChange(item, $event)"
+  ></app-checkbox>
+  <div
+    *ngIf="item.children && item.children.length > 0"
+    style="padding-left: 3rem"
+  >
+    <app-nested-checkbox [items]="item.children"></app-nested-checkbox>
+  </div>
+</div>

@@ -1,0 +1,8 @@
+<div class="items" #scrollContainer>
+  <div class="item" *ngFor="let item of data">
+    <p>{{ item.quote }}</p>
+  </div>
+  <div *ngIf="loading" class="loading-indicator">Loading more...</div>
+  <!-- Sentinel element for IntersectionObserver -->
+  <div #scrollSentinel style="height: 1px;"></div>
+</div>

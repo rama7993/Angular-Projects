@@ -1,0 +1,373 @@
+<div class="search-container">
+  <!-- Breadcrumb Navigation -->
+  <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+
+  <!-- Header -->
+  <div class="search-header">
+    <div class="container">
+      <h1 class="search-title">Discover Music</h1>
+      <p class="search-subtitle">
+        Search for your favorite songs, artists, albums, and playlists
+      </p>
+    </div>
+  </div>
+
+  <!-- Search Form -->
+  <div class="container">
+    <div class="search-form-container">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="search-form">
+            <div class="input-group">
+              <input
+                type="text"
+                class="form-control search-input"
+                placeholder="Search for songs, artists, albums, playlists..."
+                [(ngModel)]="query"
+                (input)="onSearchInput()"
+                (keyup.enter)="onSearchButtonClick()"
+              />
+              <button
+                class="btn btn-primary search-btn"
+                type="button"
+                (click)="onSearchButtonClick()"
+                [disabled]="!query || !query.trim()"
+              >
+                <i class="fas fa-search"></i>
+              </button>
+            </div>
+
+            <!-- Search Type Filter -->
+            <div class="search-filters">
+              <div class="btn-group" role="group">
+                <input
+                  type="radio"
+                  class="btn-check"
+                  name="searchType"
+                  id="all"
+                  value="all"
+                  [(ngModel)]="searchType"
+                  (change)="onSearchTypeChange()"
+                />
+                <label class="btn btn-outline-primary" for="all">All</label>
+
+                <input
+                  type="radio"
+                  class="btn-check"
+                  name="searchType"
+                  id="tracks"
+                  value="track"
+                  [(ngModel)]="searchType"
+                  (change)="onSearchTypeChange()"
+                />
+                <label class="btn btn-outline-primary" for="tracks"
+                  >Tracks</label
+                >
+
+                <input
+                  type="radio"
+                  class="btn-check"
+                  name="searchType"
+                  id="artists"
+                  value="artist"
+                  [(ngModel)]="searchType"
+                  (change)="onSearchTypeChange()"
+                />
+                <label class="btn btn-outline-primary" for="artists"
+                  >Artists</label
+                >
+
+                <input
+                  type="radio"
+                  class="btn-check"
+                  name="searchType"
+                  id="albums"
+                  value="album"
+                  [(ngModel)]="searchType"
+                  (change)="onSearchTypeChange()"
+                />
+                <label class="btn btn-outline-primary" for="albums"
+                  >Albums</label
+                >
+
+                <input
+                  type="radio"
+                  class="btn-check"
+                  name="searchType"
+                  id="playlists"
+                  value="playlist"
+                  [(ngModel)]="searchType"
+                  (change)="onSearchTypeChange()"
+                />
+                <label class="btn btn-outline-primary" for="playlists"
+                  >Playlists</label
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Default Content -->
+    <div
+      class="default-content"
+      *ngIf="!loading && !hasLoadedResults() && !query.trim()"
+    >
+      <div class="default-content-card">
+        <div class="default-icon">
+          <i class="fas fa-music"></i>
+        </div>
+        <h2>Discover Your Next Favorite Song</h2>
+        <p>
+          Search for songs, artists, albums, and playlists to find amazing music
+        </p>
+        <div class="search-suggestions">
+          <h4>Try searching for:</h4>
+          <div class="suggestion-tags">
+            <span class="suggestion-tag" (click)="setSearchQuery('pop')"
+              >Pop</span
+            >
+            <span class="suggestion-tag" (click)="setSearchQuery('rock')"
+              >Rock</span
+            >
+            <span class="suggestion-tag" (click)="setSearchQuery('jazz')"
+              >Jazz</span
+            >
+            <span class="suggestion-tag" (click)="setSearchQuery('classical')"
+              >Classical</span
+            >
+            <span class="suggestion-tag" (click)="setSearchQuery('electronic')"
+              >Electronic</span
+            >
+            <span class="suggestion-tag" (click)="setSearchQuery('hip hop')"
+              >Hip Hop</span
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Results Summary -->
+    <div class="results-summary" *ngIf="hasLoadedResults()">
+      <h3>
+        Showing {{ loadedResults }} of {{ totalResults }} results
+        <span *ngIf="loadedResults < totalResults" class="load-more-indicator">
+          ({{ totalResults - loadedResults }} more available)
+        </span>
+      </h3>
+    </div>
+
+    <!-- Tracks Section -->
+    <div class="results-section" *ngIf="tracks.length > 0">
+      <h4 class="section-title"><i class="fas fa-music"></i> Tracks</h4>
+      <div class="row">
+        <div class="col-lg-6 col-md-12 mb-3" *ngFor="let track of tracks">
+          <div class="track-card" [routerLink]="['/track', track.id]">
+            <div class="track-image">
+              <img
+                [src]="getImageUrl(track.album.images)"
+                [alt]="track.album.name"
+              />
+              <div
+                class="play-overlay"
+                (click)="playTrack(track); $event.stopPropagation()"
+                [class.playing]="isTrackPlaying(track.id)"
+                [class.searching]="isTrackSearchingPreview(track.id)"
+              >
+                <i
+                  class="fas"
+                  [class.fa-play]="
+                    !isTrackPlaying(track.id) &&
+                    !isTrackSearchingPreview(track.id)
+                  "
+                  [class.fa-pause]="isTrackPlaying(track.id)"
+                  [class.fa-spinner]="isTrackSearchingPreview(track.id)"
+                  [class.fa-spin]="isTrackSearchingPreview(track.id)"
+                ></i>
+              </div>
+            </div>
+            <div class="track-info">
+              <h5 class="track-name">{{ track.name }}</h5>
+              <p class="track-artist">
+                <a
+                  [routerLink]="['/artist', artist.id]"
+                  *ngFor="let artist of track.artists; let last = last"
+                  (click)="$event.stopPropagation()"
+                >
+                  {{ artist.name }}<span *ngIf="!last">, </span>
+                </a>
+              </p>
+              <p class="track-album">
+                <a
+                  [routerLink]="['/album', track.album.id]"
+                  (click)="$event.stopPropagation()"
+                  >{{ track.album.name }}</a
+                >
+              </p>
+
+              <div class="track-actions">
+                <button
+                  class="action-btn play-btn"
+                  (click)="playTrack(track); $event.stopPropagation()"
+                  title="Play Preview"
+                >
+                  <i
+                    class="fas"
+                    [class.fa-play]="
+                      !isTrackPlaying(track.id) &&
+                      !isTrackSearchingPreview(track.id)
+                    "
+                    [class.fa-pause]="isTrackPlaying(track.id)"
+                    [class.fa-spinner]="isTrackSearchingPreview(track.id)"
+                    [class.fa-spin]="isTrackSearchingPreview(track.id)"
+                  ></i>
+                  <span>{{
+                    isTrackSearchingPreview(track.id) ? "Searching..." : "Play"
+                  }}</span>
+                </button>
+
+                <button
+                  class="action-btn spotify-btn"
+                  (click)="openInSpotify(track); $event.stopPropagation()"
+                  *ngIf="track.external_urls?.spotify"
+                  title="Open in Spotify"
+                >
+                  <i class="fab fa-spotify"></i>
+                  <span>Spotify</span>
+                </button>
+              </div>
+            </div>
+            <div class="track-duration-right">
+              {{ formatDuration(track.duration_ms) }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Artists Section -->
+    <div class="results-section" *ngIf="artists.length > 0">
+      <h4 class="section-title"><i class="fas fa-user"></i> Artists</h4>
+      <div class="row">
+        <div
+          class="col-lg-3 col-md-4 col-sm-6 mb-4"
+          *ngFor="let artist of artists"
+        >
+          <div class="artist-card" [routerLink]="['/artist', artist.id]">
+            <div class="artist-image">
+              <img [src]="getImageUrl(artist.images)" [alt]="artist.name" />
+            </div>
+            <div class="artist-info">
+              <h5 class="artist-name">
+                {{ artist.name }}
+              </h5>
+              <p class="artist-followers">
+                {{ artist.followers.total | number }} followers
+              </p>
+              <p class="artist-genres">
+                {{ artist.genres.slice(0, 2).join(", ") }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Albums Section -->
+    <div class="results-section" *ngIf="albums.length > 0">
+      <h4 class="section-title"><i class="fas fa-compact-disc"></i> Albums</h4>
+      <div class="row">
+        <div
+          class="col-lg-3 col-md-4 col-sm-6 mb-4"
+          *ngFor="let album of albums"
+        >
+          <div class="album-card" [routerLink]="['/album', album.id]">
+            <div class="album-image">
+              <img [src]="getImageUrl(album.images)" [alt]="album.name" />
+            </div>
+            <div class="album-info">
+              <h5 class="album-name">
+                {{ album.name }}
+              </h5>
+              <p class="album-artist">{{ album.artists[0].name }}</p>
+              <p class="album-year">{{ album.release_date | date: "yyyy" }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Playlists Section -->
+    <div class="results-section" *ngIf="playlists.length > 0">
+      <h4 class="section-title"><i class="fas fa-list"></i> Playlists</h4>
+      <div class="row">
+        <div
+          class="col-lg-3 col-md-4 col-sm-6 mb-4"
+          *ngFor="let playlist of playlists"
+        >
+          <div
+            class="playlist-card"
+            *ngIf="playlist?.name"
+            [routerLink]="['/playlist', playlist.id]"
+          >
+            <div class="playlist-image">
+              <img
+                [src]="getPlaylistImageUrl(playlist?.images || [])"
+                [alt]="playlist?.name || 'Playlist'"
+              />
+            </div>
+            <div class="playlist-info">
+              <h5 class="playlist-name">
+                {{ playlist?.name || "Unknown Playlist" }}
+              </h5>
+              <p class="playlist-owner">
+                by {{ playlist?.owner?.display_name || "Unknown Creator" }}
+              </p>
+              <p class="playlist-tracks">
+                {{ playlist?.tracks?.total || 0 }} tracks
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Load More Button -->
+    <div
+      class="load-more-container"
+      *ngIf="hasMore && loadingState !== 'searching' && hasLoadedResults()"
+    >
+      <button
+        class="btn btn-outline-primary load-more-btn"
+        (click)="loadMore()"
+        [disabled]="loadingState === 'loading-more'"
+      >
+        <span *ngIf="loadingState !== 'loading-more'">Load More</span>
+        <span *ngIf="loadingState === 'loading-more'">
+          <i class="fas fa-spinner fa-spin"></i> Loading more results...
+        </span>
+      </button>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div class="loading-container" *ngIf="loadingState === 'searching'">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <p>Searching for music...</p>
+    </div>
+
+    <!-- No Results -->
+    <div
+      class="no-results"
+      *ngIf="loadingState === 'idle' && !hasLoadedResults() && query.trim()"
+    >
+      <div class="no-results-content">
+        <i class="fas fa-search"></i>
+        <h3>No results found</h3>
+        <p>Try searching for something else or check your spelling</p>
+      </div>
+    </div>
+  </div>
+</div>

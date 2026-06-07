@@ -1,0 +1,138 @@
+<div class="layout-container">
+  <!-- Sidebar Navigation -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <h2>UI Challenges</h2>
+    </div>
+    <ul class="nav-list">
+      <li
+        *ngFor="let comp of componentsList"
+        class="nav-item"
+        [class.active]="activeComponent === comp.id"
+        (click)="selectComponent(comp.id)"
+      >
+        {{ comp.name }}
+      </li>
+    </ul>
+  </aside>
+
+  <!-- Main Content Area -->
+  <main class="content-area">
+    <div class="demo-wrapper">
+      <div *ngIf="activeComponent === 'todo'" class="demo-section fade-in">
+        <app-todo-list></app-todo-list>
+      </div>
+
+      <div *ngIf="activeComponent === 'accordion'" class="demo-section fade-in">
+        <app-accordion></app-accordion>
+      </div>
+
+      <div
+        *ngIf="activeComponent === 'modal'"
+        class="demo-section fade-in"
+        style="padding: 20px"
+      >
+        <div style="text-align: center">
+          <button class="btn btn-primary" (click)="isModalOpen = true">
+            Open Modal Example
+          </button>
+        </div>
+        <app-modal [(isOpen)]="isModalOpen" title="Practice Modal">
+          <p>
+            This is the content inside the custom modal component. Notice the
+            focus trap works automatically.
+          </p>
+        </app-modal>
+      </div>
+
+      <div *ngIf="activeComponent === 'tabs'" class="demo-section fade-in">
+        <app-tabs></app-tabs>
+      </div>
+
+      <div
+        *ngIf="activeComponent === 'star-rating'"
+        class="demo-section fade-in"
+        style="text-align: center"
+      >
+        <h3>Star Rating Component</h3>
+        <div
+          style="
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+          "
+        >
+          <app-star-rating
+            [maxStars]="5"
+            [(rating)]="userRating"
+          ></app-star-rating>
+          <p>Current Rating: {{ userRating }} out of 5</p>
+        </div>
+      </div>
+
+      <div *ngIf="activeComponent === 'counter'" class="demo-section fade-in">
+        <app-counter-history></app-counter-history>
+      </div>
+
+      <div
+        *ngIf="activeComponent === 'infinite-scroll'"
+        class="demo-section fade-in"
+      >
+        <app-infinite-scroll-custom></app-infinite-scroll-custom>
+      </div>
+
+      <div
+        *ngIf="activeComponent === 'autocomplete'"
+        class="demo-section fade-in"
+      >
+        <app-autocomplete></app-autocomplete>
+      </div>
+
+      <div *ngIf="activeComponent === 'drag-drop'" class="demo-section fade-in">
+        <app-drag-drop-list></app-drag-drop-list>
+      </div>
+
+      <div
+        *ngIf="activeComponent === 'form-validation'"
+        class="demo-section fade-in"
+      >
+        <app-form-validation></app-form-validation>
+      </div>
+
+      <div
+        *ngIf="activeComponent === 'tic-tac-toe'"
+        class="demo-section fade-in"
+      >
+        <app-tic-tac-toe></app-tic-tac-toe>
+      </div>
+
+      <div *ngIf="activeComponent === 'timeline'" class="demo-section fade-in">
+        <app-timeline></app-timeline>
+      </div>
+
+      <div
+        *ngIf="activeComponent === 'infinite-scroller-og'"
+        class="demo-section fade-in"
+      >
+        <app-infinite-scroller></app-infinite-scroller>
+      </div>
+
+      <div
+        *ngIf="activeComponent === 'fetch-filter'"
+        class="demo-section fade-in"
+      >
+        <app-fetch-filter></app-fetch-filter>
+      </div>
+
+      <div *ngIf="activeComponent === 'checkbox'" class="demo-section fade-in">
+        <app-nested-checkbox [items]="checkboxItems"></app-nested-checkbox>
+      </div>
+
+      <div *ngIf="activeComponent === 'user-list'">
+        <app-users-list></app-users-list>
+      </div>
+    </div>
+  </main>
+</div>

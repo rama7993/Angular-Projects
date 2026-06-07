@@ -1,0 +1,183 @@
+<div class="call-history-container">
+  <div class="history-header">
+    <h2>Call History</h2>
+    <button class="btn btn-outline-danger" (click)="clearHistory()">
+      <i class="fas fa-trash"></i>
+      Clear History
+    </button>
+  </div>
+
+  <!-- Filters and Search -->
+  <div class="filters-container">
+    <div class="row">
+      <div class="col-md-4 mb-3">
+        <div class="input-group">
+          <span class="input-group-text">
+            <i class="fas fa-search"></i>
+          </span>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Search calls..."
+            [(ngModel)]="searchTerm"
+            (input)="onSearchChange()"
+          />
+        </div>
+      </div>
+      <div class="col-md-3 mb-3">
+        <select
+          class="form-select"
+          [(ngModel)]="filterType"
+          (change)="onFilterChange()"
+        >
+          <option value="all">All Calls</option>
+          <option value="incoming">Incoming</option>
+          <option value="outgoing">Outgoing</option>
+          <option value="missed">Missed</option>
+        </select>
+      </div>
+      <div class="col-md-3 mb-3">
+        <select
+          class="form-select"
+          [(ngModel)]="sortBy"
+          (change)="onSortChange()"
+        >
+          <option value="date">Sort by Date</option>
+          <option value="duration">Sort by Duration</option>
+          <option value="name">Sort by Name</option>
+        </select>
+      </div>
+      <div class="col-md-2 mb-3">
+        <button
+          class="btn btn-outline-secondary w-100"
+          (click)="toggleSortOrder()"
+        >
+          <i
+            class="fas fa-sort"
+            [class.fa-sort-amount-up]="sortOrder === 'asc'"
+            [class.fa-sort-amount-down]="sortOrder === 'desc'"
+          ></i>
+          {{ sortOrder === "asc" ? "Asc" : "Desc" }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Call History List -->
+  <div class="call-history-list">
+    <div *ngIf="filteredHistory.length === 0" class="no-calls">
+      <i class="fas fa-history fa-3x text-muted"></i>
+      <h4>No calls found</h4>
+      <p>
+        {{
+          searchTerm || filterType !== "all"
+            ? "Try adjusting your filters"
+            : "Your call history will appear here"
+        }}
+      </p>
+    </div>
+
+    <div class="call-item" *ngFor="let record of filteredHistory">
+      <div class="call-icon">
+        <i [class]="getCallIcon(record.type)"></i>
+      </div>
+
+      <div class="call-info">
+        <div class="call-details">
+          <h6 class="call-number">{{ record.name || record.number }}</h6>
+          <p class="call-time">
+            {{ record.startTime | date : "MMM d, y, h:mm a" }}
+          </p>
+          <div class="call-meta">
+            <span [class]="getCallTypeClass(record.type)">{{
+              record.type | titlecase
+            }}</span>
+            <span class="call-duration" *ngIf="record.duration">
+              <i class="fas fa-clock"></i>
+              {{ formatDuration(record.duration) }}
+            </span>
+            <span [class]="getCallStatusClass(record.status)">
+              <i class="fas fa-circle"></i>
+              {{ record.status | titlecase }}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="call-actions">
+        <button
+          class="btn btn-sm btn-outline-primary me-2"
+          (click)="callBack(record)"
+          title="Call Back"
+        >
+          <i class="fas fa-phone"></i>
+        </button>
+        <button
+          class="btn btn-sm btn-outline-info me-2"
+          *ngIf="record.recordingUrl"
+          (click)="downloadRecording(record)"
+          title="Download Recording"
+        >
+          <i class="fas fa-download"></i>
+        </button>
+        <button
+          class="btn btn-sm btn-outline-danger"
+          (click)="deleteRecord(record)"
+          title="Delete"
+        >
+          <i class="fas fa-trash"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Statistics -->
+  <div class="call-stats" *ngIf="callHistory.length > 0">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="stat-card">
+          <div class="stat-icon">
+            <i class="fas fa-phone text-primary"></i>
+          </div>
+          <div class="stat-content">
+            <h5>{{ getTotalCalls() }}</h5>
+            <p>Total Calls</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="stat-card">
+          <div class="stat-icon">
+            <i class="fas fa-phone-volume text-success"></i>
+          </div>
+          <div class="stat-content">
+            <h5>{{ getIncomingCalls() }}</h5>
+            <p>Incoming</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="stat-card">
+          <div class="stat-icon">
+            <i class="fas fa-phone text-info"></i>
+          </div>
+          <div class="stat-content">
+            <h5>{{ getOutgoingCalls() }}</h5>
+            <p>Outgoing</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="stat-card">
+          <div class="stat-icon">
+            <i class="fas fa-clock text-warning"></i>
+          </div>
+          <div class="stat-content">
+            <h5>{{ getTotalDuration() }}</h5>
+            <p>Total Duration</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

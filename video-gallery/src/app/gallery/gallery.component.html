@@ -1,0 +1,31 @@
+<h3 class="heading text-center">Video Gallery</h3>
+<div class="container">
+  <!-- video-list -->
+  <div class="video_list">
+    <div
+      class="Vid"
+      *ngFor="let video of videos; let i = index"
+      (click)="onVideoClick($event)"
+    >
+      <video *ngIf="video" [src]="video.video"></video>
+      <div class="d-flex flex-column">
+        <h6 class="title">{{ video?.name }}</h6>
+        <h6 class="author">{{ video?.Author }}</h6>
+        <button class="btn btn-danger" (click)="deleteVideo(i)">
+          <i class="fa fa-trash" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main-video -->
+  <div class="main_video">
+    <div class="Vid">
+      <video src="" controls muted autoplay></video>
+      <div class="d-flex flex-column">
+        <h6 class="title"></h6>
+        <h6 class="author"></h6>
+      </div>
+    </div>
+  </div>
+</div>

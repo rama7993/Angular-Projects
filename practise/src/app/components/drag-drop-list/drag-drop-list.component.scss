@@ -1,0 +1,43 @@
+.drag-container {
+  max-width: 400px;
+  margin: 20px auto;
+}
+
+h2 {
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.drop-zone {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  margin-bottom: 10px;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: grab;
+  transition: transform 0.2s, box-shadow 0.2s;
+
+  &:active {
+    cursor: grabbing;
+  }
+
+  &.dragging {
+    opacity: 0.5;
+    background: #f8f9fa;
+  }
+
+  .drag-handle {
+    margin-right: 15px;
+    color: #999;
+    cursor: grab;
+    user-select: none;
+  }
+
+  .item-content {
+    flex: 1;
+    font-size: 16px;
+    color: #444;
+  }
+}

@@ -1,0 +1,21 @@
+<div class="tabs-container">
+  <div class="tabs-header" role="tablist">
+    <button 
+      *ngFor="let tab of tabs; let i = index" 
+      class="tab-btn" 
+      [class.active]="activeTabIndex === i"
+      (click)="setActiveTab(i)"
+      role="tab"
+      [attr.aria-selected]="activeTabIndex === i"
+      tabindex="0">
+      {{ tab.title }}
+    </button>
+  </div>
+  <div class="tabs-content" role="tabpanel">
+    <ng-container *ngFor="let tab of tabs; let i = index">
+      <div *ngIf="activeTabIndex === i" class="tab-pane fade-in">
+        {{ tab.content }}
+      </div>
+    </ng-container>
+  </div>
+</div>

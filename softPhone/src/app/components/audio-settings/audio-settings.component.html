@@ -1,0 +1,117 @@
+<div class="audio-settings-page container py-3">
+  <div class="card">
+    <div class="card-header d-flex align-items-center">
+      <i class="fas fa-volume-up me-2"></i>
+      <strong>Audio Settings</strong>
+    </div>
+    <div class="card-body audio-card-body">
+      <div class="row gx-3 gy-2 align-items-center">
+        <div class="col-md-4">
+          <label class="form-label">Microphone</label>
+          <select class="form-select" [(ngModel)]="selectedMicId">
+            <option [ngValue]="''">System default</option>
+            <option *ngFor="let d of availableMics" [ngValue]="d.deviceId">
+              {{ d.label || "Microphone" }}
+            </option>
+          </select>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Speaker</label>
+          <select class="form-select" [(ngModel)]="selectedSpeakerId">
+            <option [ngValue]="''">System default</option>
+            <option *ngFor="let d of availableSpeakers" [ngValue]="d.deviceId">
+              {{ d.label || "Speaker" }}
+            </option>
+          </select>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Camera</label>
+          <select class="form-select" [(ngModel)]="selectedCamId">
+            <option [ngValue]="''">System default</option>
+            <option *ngFor="let d of availableCams" [ngValue]="d.deviceId">
+              {{ d.label || "Camera" }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="row mt-3 align-items-center">
+        <div class="col-md-8">
+          <div class="form-check form-check-inline">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              id="aec"
+              [(ngModel)]="audioOptions.echoCancellation"
+            />
+            <label class="form-check-label" for="aec">Echo cancellation</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              id="ns"
+              [(ngModel)]="audioOptions.noiseSuppression"
+            />
+            <label class="form-check-label" for="ns">Noise suppression</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              id="agc"
+              [(ngModel)]="audioOptions.autoGainControl"
+            />
+            <label class="form-check-label" for="agc">Auto gain control</label>
+          </div>
+        </div>
+        <div class="col-md-4 d-flex justify-content-md-end">
+          <button
+            type="button"
+            class="btn btn-outline-primary"
+            (click)="playTestTone()"
+          >
+            <i class="fas fa-volume-up me-2"></i>Play Test Tone
+          </button>
+        </div>
+      </div>
+      <div class="form-actions mt-3 d-flex gap-2 flex-wrap">
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="saveAudioSettings()"
+        >
+          <i class="fas fa-save me-2"></i>Save Audio Settings
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-secondary"
+          (click)="enumerateDevices()"
+        >
+          <i class="fas fa-sync me-2"></i>Refresh Devices
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-info"
+          (click)="startCameraPreview()"
+        >
+          <i class="fas fa-video me-2"></i>Preview Camera
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-danger"
+          (click)="stopCameraPreview()"
+        >
+          <i class="fas fa-stop me-2"></i>Stop Preview
+        </button>
+      </div>
+      <div class="mt-3">
+        <video
+          #previewVideo
+          class="w-100 rounded"
+          style="max-height: 240px; background: #000"
+          playsinline
+        ></video>
+      </div>
+    </div>
+  </div>
+</div>

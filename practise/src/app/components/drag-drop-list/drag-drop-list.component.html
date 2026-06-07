@@ -1,0 +1,16 @@
+<div class="drag-container">
+  <h2>Drag and Drop List</h2>
+  <div
+    class="drop-zone"
+    *ngFor="let item of items; let i = index"
+    draggable="true"
+    (dragstart)="onDragStart(i)"
+    (dragover)="onDragOver($event, i)"
+    (drop)="onDrop($event, i)"
+    (dragend)="onDragEnd()"
+    [class.dragging]="draggedIndex === i"
+  >
+    <div class="drag-handle">☰</div>
+    <div class="item-content">{{ item }}</div>
+  </div>
+</div>
