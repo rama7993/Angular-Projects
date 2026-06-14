@@ -78,7 +78,7 @@ export class IntroComponent implements AfterViewInit {
 
   downloadResume() {
     const driveLink =
-      'https://drive.google.com/uc?export=download&id=13Ou8YFCeIUvuipt8Ixs3WMkQO4LnSeP2';
+      'https://drive.google.com/uc?export=download&id=1DQFO464Mu0FNhYEAVslO66JtpOx72aJ3';
     const filename = 'Rama_Koti_Reddy_Yerram_Resume.pdf';
     this.downloadFile(driveLink, filename);
   }
