@@ -53,8 +53,6 @@ export class ContactComponent implements OnInit {
         message: this.contactForm.value.message,
       };
 
-      console.log('Template Params:', templateParams); // Debugging
-
       emailjs.send('service_6qsrpta', 'template_z5rh8fd', templateParams).then(
         (response) => {
           console.log('SUCCESS!', response.status, response.text);
@@ -63,7 +61,7 @@ export class ContactComponent implements OnInit {
         (error) => {
           console.log('FAILED...', error);
           alert('Failed to send email. Please try again.');
-        }
+        },
       );
     } else {
       this.markFormTouched(this.contactForm);

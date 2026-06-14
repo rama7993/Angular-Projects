@@ -193,7 +193,7 @@ export class SkillsComponent implements OnInit, AfterViewInit, OnDestroy {
       return this.skills;
     }
     return this.skills.filter(
-      (skill) => skill.category === this.selectedCategory
+      (skill) => skill.category === this.selectedCategory,
     );
   }
 

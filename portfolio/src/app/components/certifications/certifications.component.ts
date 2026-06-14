@@ -200,7 +200,7 @@ export class CertificationsComponent implements OnInit {
       return this.certifications;
     }
     return this.certifications.filter(
-      (cert) => cert.category === this.selectedCategory
+      (cert) => cert.category === this.selectedCategory,
     );
   }
 
@@ -208,18 +208,18 @@ export class CertificationsComponent implements OnInit {
     return {
       total: this.certifications.length,
       frontend: this.certifications.filter(
-        (cert) => cert.category === 'Frontend'
+        (cert) => cert.category === 'Frontend',
       ).length,
       backend: this.certifications.filter((cert) => cert.category === 'Backend')
         .length,
       algorithms: this.certifications.filter(
-        (cert) => cert.category === 'Algorithms'
+        (cert) => cert.category === 'Algorithms',
       ).length,
       database: this.certifications.filter(
-        (cert) => cert.category === 'Database'
+        (cert) => cert.category === 'Database',
       ).length,
       hackerrank: this.certifications.filter(
-        (cert) => cert.platform === 'HackerRank'
+        (cert) => cert.platform === 'HackerRank',
       ).length,
     };
   }

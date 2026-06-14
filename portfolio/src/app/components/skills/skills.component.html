@@ -33,9 +33,7 @@
             </div>
             <div class="expertise-content">
               <h4>Backend Development</h4>
-              <p>
-                Proficient in Node.js, NestJS, Express, Java, and Python
-              </p>
+              <p>Proficient in Node.js, NestJS, Express, Java, and Python</p>
             </div>
           </div>
           <div class="expertise-item">
@@ -101,15 +99,25 @@
               [src]="skill.image"
               [alt]="skill.name"
               class="skill-image"
-              [style.filter]="skill.name === 'Express' && isDarkMode ? 'invert(1) brightness(1.5)' : 'none'"
+              [style.filter]="
+                skill.name === 'Express' && isDarkMode
+                  ? 'invert(1) brightness(1.5)'
+                  : 'none'
+              "
             />
           </div>
           <div class="skill-info">
             <h4 class="skill-name">{{ skill.name }}</h4>
             <span
               class="skill-category"
-              [style.background-color]="(skill.name === 'Express' && isDarkMode ? '#ffffff' : skill.color) + '20'"
-              [style.color]="skill.name === 'Express' && isDarkMode ? '#ffffff' : skill.color"
+              [style.background-color]="
+                (skill.name === 'Express' && isDarkMode
+                  ? '#ffffff'
+                  : skill.color) + '20'
+              "
+              [style.color]="
+                skill.name === 'Express' && isDarkMode ? '#ffffff' : skill.color
+              "
               >{{ skill.category }}</span
             >
           </div>
